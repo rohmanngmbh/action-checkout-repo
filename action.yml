@@ -1,4 +1,4 @@
-name: "Checkout"
+name: "Checkout Repo"
 
 description: "Action to checkout GIT Repository with LFS files from cache and submodules"
 
