@@ -32,11 +32,11 @@ jobs:
           path: myself
           ref: ${{ github.ref }}
         
-      # Run checkout another example repository to 'extern'
-      - name: Checkout without lfs
+      # Run checkout an other example repository to 'extern'
+      - name: Checkout an other repository
         uses: ./
         with:
-          repository: githubtraining/community-contributors
+          repository: microsoft/mimalloc
           path: extern
 
       # List folder recursive (only for debugging)
