@@ -1,10 +1,6 @@
 #######################################################
 # This is the main CI workflow test
 #######################################################
-# - The workflow creates a bundle
-# - Test the update with hil-system
-# - Deploys the bundle
-#######################################################
 name: Test
 
 # Controls when the workflow will run
@@ -26,22 +22,25 @@ jobs:
     steps:
     
       # Checksout action repository under $GITHUB_WORKSPACE
-      - name: Checkout action 
+      - name: Checkout action repository
         uses: actions/checkout@v3
-        with:
-          repository: rohmanngmbh/action-checkout
 
-      # Run checkout with lfs using action
-      - name: Checkout with lfs
+      # Run checkout this repository to path 'myself'
+      - name: Checkout this own repo
         uses: ./
         with:
-          lfs: true
-          path: with
+          path: myself
           ref: ${{ github.ref }}
         
-      # Run checkout without lfs using action
+      # Run checkout another example repository to 'extern'
       - name: Checkout without lfs
         uses: ./
         with:
-          path: without
-          ref: ${{ github.ref }}
+          repository: githubtraining/community-contributors
+          path: extern
+
+      # List folder recursive (only for debugging)
+      - name: List folders
+        run: |
+          ls -R
+    
