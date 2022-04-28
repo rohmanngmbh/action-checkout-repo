@@ -96,7 +96,6 @@ runs:
           rm -rf ~/venvs/checkout
         fi
         echo "******************* Checkout *******************""
-      shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
