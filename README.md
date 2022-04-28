@@ -35,7 +35,7 @@ This action supports:
     token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
     path: my-repo
 ```
-> - ${{ github.token }} is scoped to the current repository, so if you want to checkout a different repository that is private you will need to provide your own PAT (personal access token). See (here)[https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token] more details.
+> - ${{ github.token }} is scoped to the current repository, so if you want to checkout a different repository that is private you will need to provide your own PAT (personal access token). See [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) more details.
 
 ## GIT LFS repo
 ```yaml
