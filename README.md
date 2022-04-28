@@ -13,7 +13,7 @@ Check this out on [Github Marketplace](https://github.com/marketplace/actions/ch
 
 ## Examples:
 
-## Checkout a different branch
+## Checkout a special branch
 ```yaml
 - uses: rohmanngmbh/action-checkout@v1
   with:
@@ -49,6 +49,14 @@ If you want to use LFS use:
   with:
     submodules: recursive
 ```
+## Checkout a special branch with fallback alternative
+```yaml
+- uses: rohmanngmbh/action-checkout@v1
+  with:
+    ref: feature/blue-light
+    alt_ref: develop
+```
+This feature we need in case of a multi-repo handling in case of mirror branches. If the feature branch does not exist in your repository, the alternative reference 'alt_ref' will be taken.
 
 ### License
 
