@@ -67,6 +67,7 @@ runs:
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
       shell: bash
       run: |
+        echo "$RUNNER_OS"
         if [ "$RUNNER_OS" == "macOS" ]; then
           python -m venv ~/venvs/checkout
           source ~/venvs/checkout/bin/activate
