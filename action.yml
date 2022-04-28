@@ -57,15 +57,38 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
+    - name: Run handle reference
+      id: pre-checkout
+      env:
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_REPOSITORY:  ${{ inputs.repository }}
+        INPUT_REF: ${{ inputs.ref }}
+        INPUT_ALT_REF:  ${{ inputs.alt_ref }}
+      shell: bash
+      run: |
+        sudo apt-get install python3-venv -y
+        python3 -m venv ~/venvs/checkout
+        source ~/venvs/checkout/bin/activate
+        pip3 install -r requirements.txt
+
+        echo "*************** Pre-Run Checkout *********************"
+        python3 main.py
+        deactivate
+        python3 -m venv ~/venvs/checkout --clear
+        rm -rf ~/venvs/checkout
+
+    # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ inputs.ref }}
+        ref:  ${{ steps.pre-checkout.outputs.ref }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
 
+    # Handle git lfs stuff: see https://github.com/nschloe/action-cached-lfs-checkout
     - name: Create LFS file list
       if: ${{ inputs.lfs == 'true' }}
       run: |

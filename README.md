@@ -1,6 +1,6 @@
 # GitHub action: checkout
 
-It's based on [Base Checkout Action](https://github.com/actions/checkout) and [Cached LFS Checkout Action](https://github.com/marketplace/actions/cached-lfs-checkout).
+It's based on [Base Checkout Action](https://github.com/actions/checkout) and [Cached LFS Checkout Action](https://github.com/nschloe/action-cached-lfs-checkout).
 
 This action supports:
 - checkout to a special folder / path
@@ -39,7 +39,7 @@ Check this out on [Github Marketplace](https://github.com/marketplace/actions/ch
   with:
     lfs: true
 ```
-This uses a regular checkout like [Cached LFS Checkout Action](https://github.com/marketplace/actions/cached-lfs-checkout).
+This uses a regular checkout like [Cached LFS Checkout Action](https://github.com/nschloe/action-cached-lfs-checkout).
 
 ## Checkout repo with submodules
 If you want to use LFS use:

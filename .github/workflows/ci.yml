@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v3
 
       # Run checkout this repository to path 'myself'
-      - name: Checkout this own repo
+      - name: Checkout this repository
         uses: ./
         with:
           path: myself
@@ -48,6 +48,21 @@ jobs:
           path: git-lfs
           ref: master
           lfs: true
+
+      # Run checkout this repository to path 'myself-alt-ref-default' to choose default branch
+      - name: Checkout this repository at alternative reference
+        uses: ./
+        with:
+          path: myself-alt-ref-default
+          ref: not/existing/feature/branch
+        
+      # Run checkout this repository to path 'myself-alt-ref' to choose an explicit alternative branch
+      - name: Checkout this repository at alternative reference
+        uses: ./
+        with:
+          path: myself-alt-ref
+          ref: not/existing/feature/branch
+          alt_ref: develop
 
       # List folder recursive (only for debugging)
       - name: List folders
