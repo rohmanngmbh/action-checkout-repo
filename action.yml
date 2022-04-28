@@ -65,7 +65,7 @@ runs:
         INPUT_REPOSITORY:  ${{ inputs.repository }}
         INPUT_REF: ${{ inputs.ref }}
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
-      #shell: bash
+      shell: bash
       run: |
         echo "$RUNNER_OS"
         if [ "$RUNNER_OS" == "macOS" ]; then
@@ -74,7 +74,7 @@ runs:
         elif [ "$RUNNER_OS" == "Windows" ]; then
           pip install virtualenv
           python -m venv venv3
-          venv3/Scripts/Activate.ps1
+          .\venv3\Scripts/activate
         else
           sudo apt-get install -y python3-venv
           python3 -m venv ~/venvs/checkout
