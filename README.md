@@ -14,6 +14,8 @@ If you want to use LFS use:
     lfs: true
 ```
 
+Check this out on [Github Marketplace](https://github.com/marketplace/actions/checkout-repo)
+
 ### License
 
 The scripts and documentation in this project are released under the MIT License.
