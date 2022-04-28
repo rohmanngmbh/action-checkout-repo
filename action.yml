@@ -67,18 +67,36 @@ runs:
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
       shell: bash
       run: |
-        sudo apt-get install python3-venv -y
-        python3 -m venv ~/venvs/checkout
-        source ~/venvs/checkout/bin/activate
-        pip3 install -r requirements.txt
-
+        if [ "$RUNNER_OS" == "macOS" ]; then
+          python -m venv ~/venvs/checkout
+          source ~/venvs/checkout/bin/activate
+        elif [ "$RUNNER_OS" == "Windows" ]; then
+          pip install virtualenv
+          cd checkout
+          virtualenv env
+          .\venv\Scripts\activate
+        else
+          sudo apt-get install python3-venv -y
+          python -m venv ~/venvs/checkout
+          source ~/venvs/checkout/bin/activate
+        fi
         echo "*************** Pre-Run Checkout ***************""
-        python3 main.py
+        pip install -r requirements.txt
+        python main.py
         deactivate
-        python3 -m venv ~/venvs/checkout --clear
-        rm -rf ~/venvs/checkout
-
+        if [ "$RUNNER_OS" == "macOS" ]; then
+          python -m venv ~/venvs/checkout --clear
+          rm -rf ~/venvs/checkout
+        elif [ "$RUNNER_OS" == "Windows" ]; then
+          python -m venv ~/venvs/checkout --clear
+          cd ..
+          del checkout
+        else
+          python -m venv ~/venvs/checkout --clear
+          rm -rf ~/venvs/checkout
+        fi
         echo "******************* Checkout *******************""
+      shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
