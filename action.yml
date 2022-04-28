@@ -1,6 +1,6 @@
 name: "Checkout Repo"
 
-description: "Action to checkout GIT Repository with special options"
+description: "Action to checkout GIT Repository with special reference handling."
 
 branding:
   icon: "download"

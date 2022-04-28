@@ -2,6 +2,12 @@
 
 It's based on [Base Checkout Action](https://github.com/actions/checkout) and [Cached LFS Checkout Action](https://github.com/nschloe/action-cached-lfs-checkout).
 
+We added a special reference handling called "alt_ref". This feature we need in case of a multi-repo build chain in case of mirror branches. If the feature branch does not exist in your repository, the alternative reference 'alt_ref' will be taken. To handle the reference stuff we are using [PyGithub](https://github.com/PyGithub/PyGithub).
+
+Check this out on [Github Marketplace](https://github.com/marketplace/actions/checkout-repo).
+
+## Options
+
 This action supports:
 - checkout to a special folder / path
 - submodules
@@ -9,7 +15,6 @@ This action supports:
 - select a special reference
 - select a alternative reference (used when your regular reference does not exist)
 
-Check this out on [Github Marketplace](https://github.com/marketplace/actions/checkout-repo).
 
 ## Examples:
 
@@ -58,7 +63,7 @@ If you want to use LFS use:
     ref: feature/blue-light
     alt_ref: develop
 ```
-This feature we need in case of a multi-repo handling in case of mirror branches. If the feature branch does not exist in your repository, the alternative reference 'alt_ref' will be taken.
+
 
 ### License
 

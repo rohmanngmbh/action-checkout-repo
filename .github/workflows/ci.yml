@@ -56,13 +56,21 @@ jobs:
           path: myself-alt-ref-default
           ref: not/existing/feature/branch
         
-      # Run checkout this repository to path 'myself-alt-ref' to choose an explicit alternative branch
-      - name: Checkout this repository at alternative reference
+      # Run checkout this repository to path 'myself-alt-ref-branch' to choose an explicit alternative branch
+      - name: Checkout this repository at alternative reference (branch)
         uses: ./
         with:
-          path: myself-alt-ref
+          path: myself-alt-ref-branch
           ref: not/existing/feature/branch
           alt_ref: develop
+
+      # Run checkout this repository to path 'myself-alt-ref-tag' to choose an explicit alternative tag
+      - name: Checkout this repository at alternative reference (tag)
+        uses: ./
+        with:
+          path: myself-alt-ref-tag
+          ref: not/existing/feature/branch
+          alt_ref: v0.1
 
       # List folder recursive (only for debugging)
       - name: List folders
