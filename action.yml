@@ -87,7 +87,7 @@ runs:
         INPUT_REPOSITORY:  ${{ inputs.repository }}
         INPUT_REF: ${{ inputs.ref }}
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
-      shell: shell
+      shell: bash
       run: |
         pip install virtualenv
         python -m venv venv3
