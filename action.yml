@@ -1,6 +1,6 @@
 name: "Checkout Repo"
 
-description: "Action to checkout GIT Repository with LFS files from cache and submodules"
+description: "Action to checkout GIT Repository with special options"
 
 branding:
   icon: "download"
@@ -17,6 +17,11 @@ inputs:
       event.  Otherwise, uses the default branch.
     required: false
     default: ${{ github.ref }}
+  alt_ref:
+    description: >
+      The alternative branch, tag or SHA to checkout. When checking out the repository that
+      triggered a workflow, this defaults to the reference or SHA for that event. Otherwise, uses the default branch.
+    required: false
   token:
     description: >
       Personal access token (PAT) used to fetch the repository. The PAT is configured
