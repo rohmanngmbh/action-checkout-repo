@@ -68,3 +68,16 @@ If you want to use LFS use:
 ### License
 
 The scripts and documentation in this project are released under the MIT License.
+
+
+### Support OS
+
+[![Test](https://github.com/rohmanngmbh/action-checkout-repo/actions/workflows/ci.yml/badge.svg)](https://github.com/rohmanngmbh/action-checkout-repo/actions/workflows/ci.yml)
+
+* ubuntu-20.04 (ubuntu-latest)
+* ubuntu-18.04
+* windows-2022 (windows-latest)
+* windows-2019
+* macos-12
+* macos-11 (macos-latest)
+* macos-10.15
