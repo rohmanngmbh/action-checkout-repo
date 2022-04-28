@@ -44,7 +44,7 @@ jobs:
       - name: Checkout a git-lfs repository
         uses: ./
         with:
-          repository: githubtraining/community-contributors
+          repository: Apress/repo-with-large-file-storage
           path: git-lfs
           ref: master
           lfs: true

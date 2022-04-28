@@ -15,12 +15,13 @@ Check this out on [Github Marketplace](https://github.com/marketplace/actions/ch
 
 ## Checkout a special branch
 ```yaml
-- uses: rohmanngmbh/action-checkout@v1
+- name: Checkout repo with a special branch
+  uses: rohmanngmbh/action-checkout@v1
   with:
     ref: my-branch
 ```
 
-## Checkout multiple repos (private)
+## Checkout private repo
 ```yaml
 - name: Checkout private repo
   uses: rohmanngmbh/action-checkout@v1
@@ -31,27 +32,28 @@ Check this out on [Github Marketplace](https://github.com/marketplace/actions/ch
 ```
 > - ${{ github.token }} is scoped to the current repository, so if you want to checkout a different repository that is private you will need to provide your own PAT (personal access token). See (here)[https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token] more details.
 
-## GIT LFS
+## GIT LFS repo
 ```yaml
-- name: Checkout lfs code
+- name: Checkout git lfs repo
   uses: rohmanngmbh/action-checkout@v1
   with:
     lfs: true
 ```
 This uses a regular checkout like [Cached LFS Checkout Action](https://github.com/marketplace/actions/cached-lfs-checkout).
 
-## Submodules
+## Checkout repo with submodules
 If you want to use LFS use:
 
 ```yaml
-- name: Checkout code
+- name: Checkout repo with submodules
   uses: rohmanngmbh/action-checkout@v1
   with:
     submodules: recursive
 ```
 ## Checkout a special branch with fallback alternative
 ```yaml
-- uses: rohmanngmbh/action-checkout@v1
+- name: Checkout repo with alternative ref
+  uses: rohmanngmbh/action-checkout@v1
   with:
     ref: feature/blue-light
     alt_ref: develop
