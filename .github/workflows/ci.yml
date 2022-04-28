@@ -73,7 +73,7 @@ jobs:
           alt_ref: v0.1
 
       # Run checkout this repository with own action (last deployed)
-      - name: Checkout this repository at alternative reference (tag)
+      - name: Checkout this repository with own action (last deployed)
         uses: rohmanngmbh/action-checkout-repo@v0.1
         with:
           path: myself-action

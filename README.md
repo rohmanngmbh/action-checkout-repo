@@ -21,7 +21,7 @@ This action supports:
 ## Checkout a special branch
 ```yaml
 - name: Checkout repo with a special branch
-  uses: rohmanngmbh/action-checkout@v1
+  uses: rohmanngmbh/action-checkout-repo@v1
   with:
     ref: my-branch
 ```
@@ -29,7 +29,7 @@ This action supports:
 ## Checkout private repo
 ```yaml
 - name: Checkout private repo
-  uses: rohmanngmbh/action-checkout@v1
+  uses: rohmanngmbh/action-checkout-repo@v1
   with:
     repository: my-org/my-private-repo
     token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
@@ -40,7 +40,7 @@ This action supports:
 ## GIT LFS repo
 ```yaml
 - name: Checkout git lfs repo
-  uses: rohmanngmbh/action-checkout@v1
+  uses: rohmanngmbh/action-checkout-repo@v1
   with:
     lfs: true
 ```
@@ -51,14 +51,14 @@ If you want to use LFS use:
 
 ```yaml
 - name: Checkout repo with submodules
-  uses: rohmanngmbh/action-checkout@v1
+  uses: rohmanngmbh/action-checkout-repo@v1
   with:
     submodules: recursive
 ```
 ## Checkout a special branch with fallback alternative
 ```yaml
 - name: Checkout repo with alternative ref
-  uses: rohmanngmbh/action-checkout@v1
+  uses: rohmanngmbh/action-checkout-repo@v1
   with:
     ref: feature/blue-light
     alt_ref: develop
