@@ -32,13 +32,22 @@ jobs:
           path: myself
           ref: ${{ github.ref }}
         
-      # Run checkout an other example repository to 'extern'
-      - name: Checkout an other repository
+      # Run checkout an extern example repository to 'extern'
+      - name: Checkout an extern repository
         uses: ./
         with:
           repository: githubtraining/community-contributors
           path: extern
           ref: main
+
+      # Run checkout an git lfs example repository to folder 'git-lfs'
+      - name: Checkout a git-lfs repository
+        uses: ./
+        with:
+          repository: githubtraining/community-contributors
+          path: git-lfs
+          ref: master
+          lfs: true
 
       # List folder recursive (only for debugging)
       - name: List folders
