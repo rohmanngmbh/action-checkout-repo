@@ -58,49 +58,66 @@ runs:
   using: "composite"
   steps:
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
-    - name: Run handle reference
-      id: pre-checkout
+    - name: Run handle reference on windows
+      id: pre-checkout-win
+      if: ${{ runner.os == Windows }}
       env:
         INPUT_TOKEN: ${{ inputs.token }}
         INPUT_REPOSITORY:  ${{ inputs.repository }}
         INPUT_REF: ${{ inputs.ref }}
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
-      shell: bash
+      shell: cmd
       run: |
-        echo "$RUNNER_OS"
-        if [ "$RUNNER_OS" == "macOS" ]; then
-          python3 -m venv ~/venvs/checkout
-          source ~/venvs/checkout/bin/activate
-        elif [ "$RUNNER_OS" == "Windows" ]; then
-          pip install virtualenv
-          python -m venv venv3
-          .\venv3\Scripts\activate
-        else
-          sudo apt-get install -y python3-venv
-          python3 -m venv ~/venvs/checkout
-          source ~/venvs/checkout/bin/activate
-        fi
+        python3 -m venv ~/venvs/venv3
+        source ~/venvs/venv3/bin/activate
         echo "*************** Pre-Run Checkout ***************""
         pip install -r requirements.txt
         python main.py
         deactivate
-        if [ "$RUNNER_OS" == "macOS" ]; then
-          python -m venv ~/venvs/checkout --clear
-          rm -rf ~/venvs/checkout
-        elif [ "$RUNNER_OS" == "Windows" ]; then
-          python -m venv venv3 --clear
-        else
-          python3 -m venv ~/venvs/checkout --clear
-          rm -rf ~/venvs/checkout
-        fi
+        python -m venv ~/venvs/venv3 --clear
+        rm -rf ~/venvs/checkout
         echo "******************* Checkout *******************""
 
+    # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
+    - name: Run handle reference on linux/mac
+      id: pre-checkout-other
+      if: ${{ runner.os != Windows }}
+      env:
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_REPOSITORY:  ${{ inputs.repository }}
+        INPUT_REF: ${{ inputs.ref }}
+        INPUT_ALT_REF:  ${{ inputs.alt_ref }}
+      shell: shell
+      run: |
+        pip install virtualenv
+        python -m venv venv3
+        .\venv3\Scripts\activate
+        echo "*************** Pre-Run Checkout ***************""
+        pip install -r requirements.txt
+        python main.py
+        deactivate
+        python -m venv ~/venvs/venv3 --clear
+        rm -rf ~/venvs/checkout
+        echo "******************* Checkout *******************""
+  
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
+      if: ${{ runner.os == Windows }}
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ steps.pre-checkout.outputs.ref }}
+        ref:  ${{ steps.pre-checkout-win.outputs.ref }}
+        token: ${{ inputs.token }}
+        path: ${{ inputs.path }}
+        lfs: ${{ inputs.lfs }}
+
+    # Call normal checkout action: see https://github.com/actions/checkout
+    - name: Checkout code
+      if: ${{ runner.os != Windows }}
+      uses: actions/checkout@v3
+      with:
+        repository:  ${{ inputs.repository }}
+        ref:  ${{ steps.pre-checkout-other.outputs.ref }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
