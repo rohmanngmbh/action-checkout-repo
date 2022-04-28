@@ -160,6 +160,9 @@ if __name__ == "__main__":
         # take default ref if alt ref does not exist
         else:
             ret_ref = repo.default_branch
-            
+
+    # print information
+    print("Found following return ref '{}' for repository '{}' with input ref '{}' and input alt_ref '{}'.".format(ret_ref, repo.full_name, my_ref, my_alt_ref, ))
+
     # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
     print(f"::set-output name=ref::{ret_ref}")
