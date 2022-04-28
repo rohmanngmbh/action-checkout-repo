@@ -60,7 +60,7 @@ runs:
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
       id: pre-checkout-win
-      if: ${{ runner.os == Windows }}
+      if: ${{ runner.os == 'Windows' }}
       env:
         INPUT_TOKEN: ${{ inputs.token }}
         INPUT_REPOSITORY:  ${{ inputs.repository }}
@@ -81,7 +81,7 @@ runs:
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on linux/mac
       id: pre-checkout-other
-      if: ${{ runner.os != Windows }}
+      if: ${{ runner.os != 'Windows' }}
       env:
         INPUT_TOKEN: ${{ inputs.token }}
         INPUT_REPOSITORY:  ${{ inputs.repository }}
@@ -102,7 +102,7 @@ runs:
   
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
-      if: ${{ runner.os == Windows }}
+      if: ${{ runner.os == 'Windows' }}
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
@@ -113,7 +113,7 @@ runs:
 
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
-      if: ${{ runner.os != Windows }}
+      if: ${{ runner.os != 'Windows' }}
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
