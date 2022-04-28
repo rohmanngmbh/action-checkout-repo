@@ -77,8 +77,8 @@ runs:
           virtualenv env
           .\venv\Scripts\activate
         else
-          sudo apt-get install python3-venv -y
-          python -m venv ~/venvs/checkout
+          sudo apt-get install -y python3-venv
+          python3 -m venv ~/venvs/checkout
           source ~/venvs/checkout/bin/activate
         fi
         echo "*************** Pre-Run Checkout ***************""
@@ -93,7 +93,7 @@ runs:
           cd ..
           del checkout
         else
-          python -m venv ~/venvs/checkout --clear
+          python3 -m venv ~/venvs/checkout --clear
           rm -rf ~/venvs/checkout
         fi
         echo "******************* Checkout *******************""
