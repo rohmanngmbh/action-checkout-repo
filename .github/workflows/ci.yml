@@ -36,8 +36,9 @@ jobs:
       - name: Checkout an other repository
         uses: ./
         with:
-          repository: microsoft/mimalloc
+          repository: githubtraining/community-contributors
           path: extern
+          ref: main
 
       # List folder recursive (only for debugging)
       - name: List folders
