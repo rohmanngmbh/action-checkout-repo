@@ -73,9 +73,8 @@ runs:
           source ~/venvs/checkout/bin/activate
         elif [ "$RUNNER_OS" == "Windows" ]; then
           pip install virtualenv
-          cd checkout
-          virtualenv env
-          .\venv\Scripts\activate
+          python -m venv checkout
+          checkout\Scripts\Activate.ps1
         else
           sudo apt-get install -y python3-venv
           python3 -m venv ~/venvs/checkout
@@ -89,9 +88,7 @@ runs:
           python -m venv ~/venvs/checkout --clear
           rm -rf ~/venvs/checkout
         elif [ "$RUNNER_OS" == "Windows" ]; then
-          python -m venv ~/venvs/checkout --clear
-          cd ..
-          del checkout
+          python -m venv checkout --clear
         else
           python3 -m venv ~/venvs/checkout --clear
           rm -rf ~/venvs/checkout
