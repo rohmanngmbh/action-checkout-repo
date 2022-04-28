@@ -72,11 +72,13 @@ runs:
         source ~/venvs/checkout/bin/activate
         pip3 install -r requirements.txt
 
-        echo "*************** Pre-Run Checkout *********************"
+        echo "*************** Pre-Run Checkout ***************""
         python3 main.py
         deactivate
         python3 -m venv ~/venvs/checkout --clear
         rm -rf ~/venvs/checkout
+
+        echo "******************* Checkout *******************""
 
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
