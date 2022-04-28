@@ -69,12 +69,12 @@ runs:
       run: |
         echo "$RUNNER_OS"
         if [ "$RUNNER_OS" == "macOS" ]; then
-          python -m venv ~/venvs/checkout
+          python3 -m venv ~/venvs/checkout
           source ~/venvs/checkout/bin/activate
         elif [ "$RUNNER_OS" == "Windows" ]; then
           pip install virtualenv
-          python -m venv checkout
-          checkout\Scripts\Activate.ps1
+          python -m venv venv3
+          venv3/Scripts/Activate.ps1
         else
           sudo apt-get install -y python3-venv
           python3 -m venv ~/venvs/checkout
@@ -88,7 +88,7 @@ runs:
           python -m venv ~/venvs/checkout --clear
           rm -rf ~/venvs/checkout
         elif [ "$RUNNER_OS" == "Windows" ]; then
-          python -m venv checkout --clear
+          python -m venv venv3 --clear
         else
           python3 -m venv ~/venvs/checkout --clear
           rm -rf ~/venvs/checkout
