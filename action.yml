@@ -65,7 +65,7 @@ runs:
         INPUT_REPOSITORY:  ${{ inputs.repository }}
         INPUT_REF: ${{ inputs.ref }}
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
-      shell: bash
+      #shell: bash
       run: |
         echo "$RUNNER_OS"
         if [ "$RUNNER_OS" == "macOS" ]; then
