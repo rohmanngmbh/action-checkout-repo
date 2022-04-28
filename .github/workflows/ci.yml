@@ -76,11 +76,11 @@ jobs:
           ref: not/existing/feature/branch
           alt_ref: v0.1
 
-      # Run checkout this repository with own action (last deployed)
-      - name: Checkout this repository with own action (last deployed)
-        uses: rohmanngmbh/action-checkout-repo@v1
-        with:
-          path: myself-action
+      # # Run checkout this repository with own action (last deployed)
+      # - name: Checkout this repository with own action (last deployed)
+      #   uses: rohmanngmbh/action-checkout-repo@v1
+      #   with:
+      #     path: myself-action
 
       # List folder recursive (only for debugging)
       - name: List folders
