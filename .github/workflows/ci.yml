@@ -78,7 +78,7 @@ jobs:
 
       # Run checkout this repository with own action (last deployed)
       - name: Checkout this repository with own action (last deployed)
-        uses: rohmanngmbh/action-checkout-repo@main
+        uses: rohmanngmbh/action-checkout-repo@v1.1.0
         with:
           path: myself-action
 
