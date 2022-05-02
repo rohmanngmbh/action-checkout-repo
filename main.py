@@ -2,6 +2,46 @@ import os
 import argparse
 from github import Github
 
+def _convert_ref_name(ref_name:str, return_type:bool=False):
+    ''' convert ref name if necessary
+
+    Example:
+        >>> _convert_ref_name('refs/heads/develop')
+        develop
+        >>> _convert_ref_name('develop')
+        develop
+        >>> _convert_ref_name(None)
+        None
+        >>> _convert_ref_name('refs/tags/example-tag')
+        example-tag
+        >>> _convert_ref_name('example-tag')
+        example-tag
+    
+    Option to enable second return value:
+        type (str): 'tag', 'branch', 'unknown'
+    '''
+    if ref_name == None or ref_name == '':
+        return None
+    else:
+        # convert ref name (if necessary)
+        if ref_name.find('refs/heads/') != -1:
+            ref_name_local = ref_name.split('refs/heads/')
+            if return_type:
+                return ref_name_local[1], 'branch'
+            else:
+                return ref_name_local[1]
+        elif ref_name.find('refs/tags/') != -1:
+            ref_name_local = ref_name.split('refs/tags/')
+            if return_type:
+                return ref_name_local[1], 'tag'
+            else:
+                return ref_name_local[1]
+        else:
+            if return_type:
+                return ref_name, 'unknown'
+            else:
+                return ref_name
+
 def list_ref_names(repo, filter=[]) -> list:
     ''' List all ref names of a repository
 
@@ -151,15 +191,17 @@ if __name__ == "__main__":
 
     # if ref exist take regular ref
     if check_if_ref_exist(repo, my_ref):
-        ret_ref = my_ref
+        local_ref = my_ref
     # if ref does not exist:
     else:
         # take alt ref, if exists
         if check_if_ref_exist(repo, my_alt_ref):
-            ret_ref = my_alt_ref
+            local_ref = my_alt_ref
         # take default ref if alt ref does not exist
         else:
-            ret_ref = repo.default_branch
+            local_ref = repo.default_branch
+
+    ret_ref = _convert_ref_name(local_ref)
 
     # print information
     print("Found following return ref '{}' for repository '{}' with input ref '{}' and input alt_ref '{}'.".format(ret_ref, repo.full_name, my_ref, my_alt_ref, ))
