@@ -99,19 +99,19 @@ runs:
         python -m venv ~/venvs/venv3 --clear
         echo "******************* Checkout *******************""
   
-      # Show ref information
-      - name: Show ref information
-        if: ${{ runner.os != 'Windows' }}
-        run: |
-            echo "ref: ${{ steps.pre-checkout-other.outputs.ref }}"
-        shell: bash
-  
-        # Show ref information
-      - name: Show ref information
-        if: ${{ runner.os == 'Windows' }}
-        run: |
-            echo "ref: ${{ steps.pre-checkout-win.outputs.ref }}"
-        shell: bash
+    # Show ref information
+    - name: Show ref information
+      if: ${{ runner.os != 'Windows' }}
+      run: |
+          echo "ref: ${{ steps.pre-checkout-other.outputs.ref }}"
+      shell: bash
+
+    # Show ref information
+    - name: Show ref information
+      if: ${{ runner.os == 'Windows' }}
+      run: |
+          echo "ref: ${{ steps.pre-checkout-win.outputs.ref }}"
+      shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
