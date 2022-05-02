@@ -71,7 +71,7 @@ runs:
         echo "*************** Pre-Run Checkout ***************"
         pip3 install -r requirements.txt
         python3 main.py
-        echo "MY_REF=$ref" >> $GITHUB_ENV
+        echo "MY_REF=test" >> $GITHUB_ENV
         echo "******************* Checkout *******************"
         echo "$ref"
         echo "$MY_REF"
@@ -90,7 +90,7 @@ runs:
         echo "*************** Pre-Run Checkout ***************"
         pip install -r requirements.txt
         python main.py
-        echo "MY_REF=$ref" >> $GITHUB_ENV
+        echo "MY_REF=test" >> $GITHUB_ENV
         echo "******************* Checkout *******************"
         echo "$ref"
         echo "$MY_REF"
