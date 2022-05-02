@@ -77,7 +77,7 @@ runs:
         python -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         echo "******************* Checkout *******************""
-        echo "$ref"
+        ref=test
         echo "PY_REF=$ref" >> $GITHUB_ENV
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
