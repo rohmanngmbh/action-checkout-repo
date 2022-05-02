@@ -103,10 +103,8 @@ runs:
 
     # Show current reference
     - name: Show current reference
-      with:
-        ref:  ${{ env.MY_REF }}
       run: |
-        echo "ref: $ref"
+        echo "ref: ${{ env.MY_REF }}"
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
