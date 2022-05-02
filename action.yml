@@ -103,7 +103,7 @@ runs:
     # Show ref information
     - name: Show ref information
       run: |
-          echo "my_ref: ${{ env.my_ref }}"
+          echo "my_var: ${{ env.my_var }}"
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
@@ -112,7 +112,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ env.my_ref}}
+        ref:  ${{ env.my_var}}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
@@ -123,7 +123,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ env.my_ref }}
+        ref:  ${{ env.my_var }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
