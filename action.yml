@@ -102,6 +102,7 @@ runs:
       if: ${{ runner.os != 'Windows' }}
       run: |
           echo "ref: ${{ steps.pre-checkout-other.outputs.ref }}"
+          echo "${{ PY_REF }}""
       shell: bash
 
     # Show ref information
@@ -109,6 +110,7 @@ runs:
       if: ${{ runner.os == 'Windows' }}
       run: |
           echo "ref: ${{ steps.pre-checkout-win.outputs.ref }}"
+          echo "${{ PY_REF }}""
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
