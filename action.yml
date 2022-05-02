@@ -112,20 +112,6 @@ runs:
         lfs: ${{ inputs.lfs }}
 
     # Handle git lfs stuff: see https://github.com/nschloe/action-cached-lfs-checkout
-    - name: Create LFS file list
-      if: ${{ inputs.lfs == 'true' }}
-      run: |
-        git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
-      shell: bash
-
-    - name: Restore LFS cache
-      if: ${{ inputs.lfs == 'true' }}
-      uses: actions/cache@v3
-      id: lfs-cache
-      with:
-        path: .git/lfs
-        key: lfs-${{ hashFiles('.lfs-assets-id') }}-v1
-
     - name: Git LFS Pull
       if: ${{ inputs.lfs == 'true' }}
       run: git lfs pull
