@@ -166,4 +166,6 @@ if __name__ == "__main__":
 
     # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
     # print(f"::set-output name=ref::{ret_ref}")
-    os.environ["MY_REF"] = ret_ref
+    env_file = os.getenv('GITHUB_ENV')
+    with open(env_file, "a") as myfile:
+        myfile.write("MY_REFVAR={}".format(ret_ref))

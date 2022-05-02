@@ -71,10 +71,7 @@ runs:
         echo "*************** Pre-Run Checkout ***************"
         pip3 install -r requirements.txt
         python3 main.py
-        echo "MY_REF=test" >> $GITHUB_ENV
         echo "******************* Checkout *******************"
-        echo "$ref"
-        echo "$MY_REF"
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
@@ -90,25 +87,20 @@ runs:
         echo "*************** Pre-Run Checkout ***************"
         pip install -r requirements.txt
         python main.py
-        echo "MY_REF=test" >> $GITHUB_ENV
         echo "******************* Checkout *******************"
-        echo "$ref"
-        echo "$MY_REF"
   
     # Show ref information
     - name: Show ref information
       if: ${{ runner.os != 'Windows' }}
       run: |
-          echo "ref: ${{ steps.pre-checkout-other.outputs.ref }}"
-          echo "ref2: ${{ env.MY_REF }}"
+          echo "ref: ${{ env.MY_REF }}"
       shell: bash
 
     # Show ref information
     - name: Show ref information
       if: ${{ runner.os == 'Windows' }}
       run: |
-          echo "ref: ${{ steps.pre-checkout-win.outputs.ref }}"
-          echo "ref2: ${{ env.MY_REF }}"
+          echo "ref: ${{ env.MY_REF }}"
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
