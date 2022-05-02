@@ -108,7 +108,7 @@ runs:
   
         # Show ref information
       - name: Show ref information
-        if: ${{ runner.os != 'Windows' }}
+        if: ${{ runner.os == 'Windows' }}
         run: |
             echo "ref: ${{ steps.pre-checkout-win.outputs.ref }}"
         shell: bash
