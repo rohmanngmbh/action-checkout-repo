@@ -132,7 +132,7 @@ runs:
     - name: Restore LFS cache
       if: ${{ inputs.lfs == 'true' &&  inputs.path == '' }}
       uses: actions/cache@v3
-      id: lfs-cache
+      id: lfs-cache-base
       with:
         path: .git/lfs
         key: lfs-${{ hashFiles('.lfs-assets-id') }}-v1
@@ -152,7 +152,7 @@ runs:
     - name: Restore LFS cache
       if: ${{ inputs.lfs == 'true' &&  inputs.path != '' }}
       uses: actions/cache@v3
-      id: lfs-cache
+      id: lfs-cache-special
       with:
         path: ${{ inputs.path }}/.git/lfs
         key: lfs-${{ hashFiles('.lfs-assets-id') }}-v1
