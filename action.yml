@@ -77,8 +77,7 @@ runs:
         python -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         echo "******************* Checkout *******************""
-        ref=test
-        echo "PY_REF=$ref" >> $GITHUB_ENV
+        echo "MY_REF=$ref" >> $GITHUB_ENV
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
@@ -100,24 +99,7 @@ runs:
         deactivate
         python -m venv ~/venvs/venv3 --clear
         echo "******************* Checkout *******************""
-        ref=test
-        echo "PY_REF=$ref" >> $GITHUB_ENV
-
-    # Show ref information
-    - name: Show ref information
-      if: ${{ runner.os != 'Windows' }}
-      run: |
-          echo "ref: ${{ steps.pre-checkout-other.outputs.ref }}"
-          echo $PY_REF
-      shell: bash
-
-    # Show ref information
-    - name: Show ref information
-      if: ${{ runner.os == 'Windows' }}
-      run: |
-          echo "ref: ${{ steps.pre-checkout-win.outputs.ref }}"
-          echo %PY_REF%
-      shell: bash
+        echo "MY_REF=$ref" >> $GITHUB_ENV
 
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
@@ -125,7 +107,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ env.PY_REF }}
+        ref:  ${{ env.MY_REF }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
@@ -136,7 +118,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ steps.PY_REF }}
+        ref:  ${{ env.MY_REF }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
