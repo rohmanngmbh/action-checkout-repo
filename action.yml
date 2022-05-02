@@ -68,6 +68,7 @@ runs:
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
       shell: bash
       run: |
+        pip install virtualenv
         python3 -m venv ~/venvs/venv3
         source ~/venvs/venv3/bin/activate
         echo "*************** Pre-Run Checkout ***************"
