@@ -112,7 +112,15 @@ runs:
         lfs: ${{ inputs.lfs }}
 
     # Handle git lfs stuff: see https://github.com/nschloe/action-cached-lfs-checkout
-    - name: Git LFS Pull
-      if: ${{ inputs.lfs == 'true' }}
+    - name: Git LFS Pull in base path
+      if: ${{ inputs.lfs == 'true' &&  inputs.path == ''}}
       run: git lfs pull
+      shell: bash
+
+    # Handle git lfs stuff: see https://github.com/nschloe/action-cached-lfs-checkout
+    - name: Git LFS Pull in special path
+      if: ${{ inputs.lfs == 'true' &&  inputs.path != ''}}
+      run: |
+        cd ${{ inputs.path }}
+        git lfs pull
       shell: bash
