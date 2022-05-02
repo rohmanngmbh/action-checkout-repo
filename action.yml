@@ -68,6 +68,7 @@ runs:
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
       shell: bash
       run: |
+        ::echo::on
         python3 -m venv ~/venvs/venv3
         source ~/venvs/venv3/bin/activate
         echo "*************** Pre-Run Checkout ***************""
@@ -77,6 +78,7 @@ runs:
         python -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         echo "******************* Checkout *******************""
+        ::echo::off
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
@@ -89,6 +91,7 @@ runs:
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
       shell: cmd
       run: |
+        ::echo::on
         pip install virtualenv
         python -m venv venv3
         .\venv3\Scripts\activate
@@ -98,6 +101,7 @@ runs:
         deactivate
         python -m venv ~/venvs/venv3 --clear
         echo "******************* Checkout *******************""
+        ::echo::off
   
     # Show ref information
     - name: Show ref information
