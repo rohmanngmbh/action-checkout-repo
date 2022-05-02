@@ -100,7 +100,7 @@ runs:
         deactivate
         python -m venv ~/venvs/venv3 --clear
         echo "******************* Checkout *******************""
-        echo "$ref"
+        ref=test
         echo "PY_REF=$ref" >> $GITHUB_ENV
 
     # Show ref information
