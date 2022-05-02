@@ -101,6 +101,14 @@ runs:
         echo "******************* Checkout *******************""
         echo "MY_REF=$ref" >> $GITHUB_ENV
 
+    # Show current reference
+    - name: Show current reference
+      with:
+        ref:  ${{ env.MY_REF }}
+      run: |
+        echo "ref: $ref"
+      shell: bash
+
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
       if: ${{ runner.os != 'Windows' }}
