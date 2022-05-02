@@ -70,13 +70,13 @@ runs:
       run: |
         python3 -m venv ~/venvs/venv3
         source ~/venvs/venv3/bin/activate
-        echo "*************** Pre-Run Checkout ***************""
+        echo "*************** Pre-Run Checkout ***************"
         pip install -r requirements.txt
         python main.py
         deactivate
         python -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
-        echo "******************* Checkout *******************""
+        echo "******************* Checkout *******************"
         ref=main
         echo "MY_REF=$ref" >> $GITHUB_ENV
 
@@ -94,12 +94,12 @@ runs:
         pip install virtualenv
         python -m venv venv3
         .\venv3\Scripts\activate
-        echo "*************** Pre-Run Checkout ***************""
+        echo "*************** Pre-Run Checkout ***************"
         pip install -r requirements.txt
         python main.py
         deactivate
         python -m venv ~/venvs/venv3 --clear
-        echo "******************* Checkout *******************""
+        echo "******************* Checkout *******************"
         ref=main
         echo "MY_REF=$ref" >> $GITHUB_ENV
 
