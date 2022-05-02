@@ -68,14 +68,14 @@ runs:
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
       shell: bash
       run: |
-        pip install virtualenv
+        pip3 install virtualenv
         python3 -m venv ~/venvs/venv3
         source ~/venvs/venv3/bin/activate
         echo "*************** Pre-Run Checkout ***************"
-        pip install -r requirements.txt
-        python main.py
+        pip3 install -r requirements.txt
+        pytyon3 main.py
         deactivate
-        python -m venv ~/venvs/venv3 --clear
+        python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         echo "******************* Checkout *******************"
 
