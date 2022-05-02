@@ -73,7 +73,7 @@ runs:
         source ~/venvs/venv3/bin/activate
         echo "*************** Pre-Run Checkout ***************"
         pip3 install -r requirements.txt
-        pytyon3 main.py
+        python3 main.py
         deactivate
         python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
