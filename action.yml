@@ -43,6 +43,16 @@ inputs:
       recursively checkout submodules.
     required: false
     default: false
+  include:
+    description: >
+      Explicitly include files for LFS
+    required: false
+    default: "*"
+  exclude:
+    description: >
+      Explicitly exclude files for LFS
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -112,6 +122,23 @@ runs:
         lfs: ${{ inputs.lfs }}
 
     # Handle git lfs stuff: see https://github.com/nschloe/action-cached-lfs-checkout
+    - name: Create LFS file list
+      if: ${{ inputs.lfs == 'true' }}
+      run: |
+        git lfs ls-files --long --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}" | cut -d ' ' -f1 | sort > .lfs-assets-id
+      shell: bash
+
+    - name: Restore LFS cache
+      if: ${{ inputs.lfs == 'true' }}
+      uses: actions/cache@v3
+      id: lfs-cache
+      with:
+        path: .git/lfs
+        key: lfs-${{ hashFiles('.lfs-assets-id') }}-v1
+
+    - name: Git LFS Pull
+      if: ${{ inputs.lfs == 'true' }}
+      run: git lfs pull --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}"
     - name: Git LFS Pull in base path
       if: ${{ inputs.lfs == 'true' &&  inputs.path == ''}}
       run: git lfs pull
