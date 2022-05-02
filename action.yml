@@ -106,7 +106,6 @@ runs:
           echo "my_ref: ${{ env.my_ref }}"
       shell: bash
 
-
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
       if: ${{ runner.os != 'Windows' }}

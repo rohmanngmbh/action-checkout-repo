@@ -163,15 +163,15 @@ if __name__ == "__main__":
 
     # ref management
     try:
-        my_ref = os.environ["INPUT_REF"]
+        my_refer = os.environ["INPUT_REF"]
     except:
         # ref management
         # if ref project is set: ask for manual input
         if args.ref is None:
-            my_ref = input("Please insert your ref:")
+            my_refer = input("Please insert your ref:")
         # take input from args
         else:
-            my_ref = args.ref
+            my_refer = args.ref
 
     # ref_alt management
     try:
@@ -190,8 +190,8 @@ if __name__ == "__main__":
     repo = g.get_repo(my_repository)
 
     # if ref exist take regular ref
-    if check_if_ref_exist(repo, my_ref):
-        local_ref = my_ref
+    if check_if_ref_exist(repo, my_refer):
+        local_ref = my_refer
     # if ref does not exist:
     else:
         # take alt ref, if exists
@@ -204,7 +204,7 @@ if __name__ == "__main__":
     ret_ref = _convert_ref_name(local_ref)
 
     # print information
-    print("Found following return ref '{}' for repository '{}' with input ref '{}' and input alt_ref '{}'.".format(ret_ref, repo.full_name, my_ref, my_alt_ref, ))
+    print("Found following return ref '{}' for repository '{}' with input ref '{}' and input alt_ref '{}'.".format(ret_ref, repo.full_name, my_refer, my_alt_ref, ))
 
     # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
     # print(f"::set-output name=ref::{ret_ref}")
