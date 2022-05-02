@@ -73,6 +73,8 @@ runs:
         python3 main.py
         echo "MY_REF=$ref" >> $GITHUB_ENV
         echo "******************* Checkout *******************"
+        echo "$ref"
+        echo "$MY_REF"
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
@@ -90,6 +92,8 @@ runs:
         python main.py
         echo "MY_REF=$ref" >> $GITHUB_ENV
         echo "******************* Checkout *******************"
+        echo "$ref"
+        echo "$MY_REF"
   
     # Show ref information
     - name: Show ref information
