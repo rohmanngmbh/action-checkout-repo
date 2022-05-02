@@ -122,14 +122,15 @@ runs:
         lfs: ${{ inputs.lfs }}
 
     # Handle git lfs stuff: see https://github.com/nschloe/action-cached-lfs-checkout
+    # in case of base path
     - name: Create LFS file list
-      if: ${{ inputs.lfs == 'true' }}
+      if: ${{ inputs.lfs == 'true' &&  inputs.path == '' }}
       run: |
         git lfs ls-files --long --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}" | cut -d ' ' -f1 | sort > .lfs-assets-id
       shell: bash
 
     - name: Restore LFS cache
-      if: ${{ inputs.lfs == 'true' }}
+      if: ${{ inputs.lfs == 'true' &&  inputs.path == '' }}
       uses: actions/cache@v3
       id: lfs-cache
       with:
@@ -137,17 +138,28 @@ runs:
         key: lfs-${{ hashFiles('.lfs-assets-id') }}-v1
 
     - name: Git LFS Pull
-      if: ${{ inputs.lfs == 'true' }}
+      if: ${{ inputs.lfs == 'true' &&  inputs.path == '' }}
       run: git lfs pull --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}"
-    - name: Git LFS Pull in base path
-      if: ${{ inputs.lfs == 'true' &&  inputs.path == ''}}
-      run: git lfs pull
+
+    # in case of special path
+    - name: Create LFS file list
+      if: ${{ inputs.lfs == 'true' &&  inputs.path != '' }}
+      run: |
+        cd ${{ inputs.path }}
+        git lfs ls-files --long --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}" | cut -d ' ' -f1 | sort > .lfs-assets-id
       shell: bash
 
-    # Handle git lfs stuff: see https://github.com/nschloe/action-cached-lfs-checkout
+    - name: Restore LFS cache
+      if: ${{ inputs.lfs == 'true' &&  inputs.path != '' }}
+      uses: actions/cache@v3
+      id: lfs-cache
+      with:
+        path: ${{ inputs.path }}/.git/lfs
+        key: lfs-${{ hashFiles('.lfs-assets-id') }}-v1
+
     - name: Git LFS Pull in special path
       if: ${{ inputs.lfs == 'true' &&  inputs.path != ''}}
       run: |
         cd ${{ inputs.path }}
-        git lfs pull
+        git lfs pull --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}"
       shell: bash
