@@ -43,16 +43,6 @@ inputs:
       recursively checkout submodules.
     required: false
     default: false
-  include:
-    description: >
-      Explicitly include files for LFS
-    required: false
-    default: "*"
-  exclude:
-    description: >
-      Explicitly exclude files for LFS
-    required: false
-    default: ""
 
 runs:
   using: "composite"
@@ -125,7 +115,7 @@ runs:
     - name: Create LFS file list
       if: ${{ inputs.lfs == 'true' }}
       run: |
-        git lfs ls-files --long --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}" | cut -d ' ' -f1 | sort > .lfs-assets-id
+        git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
       shell: bash
 
     - name: Restore LFS cache
@@ -138,5 +128,5 @@ runs:
 
     - name: Git LFS Pull
       if: ${{ inputs.lfs == 'true' }}
-      run: git lfs pull --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}"
+      run: git lfs pull
       shell: bash
