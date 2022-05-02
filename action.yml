@@ -68,7 +68,6 @@ runs:
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
       shell: bash
       run: |
-        echo '::echo::on'
         python3 -m venv ~/venvs/venv3
         source ~/venvs/venv3/bin/activate
         echo "*************** Pre-Run Checkout ***************""
@@ -78,7 +77,6 @@ runs:
         python -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         echo "******************* Checkout *******************""
-        echo '::echo::off'
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
@@ -91,7 +89,6 @@ runs:
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
       shell: cmd
       run: |
-        echo '::echo::on'
         pip install virtualenv
         python -m venv venv3
         .\venv3\Scripts\activate
@@ -101,14 +98,14 @@ runs:
         deactivate
         python -m venv ~/venvs/venv3 --clear
         echo "******************* Checkout *******************""
-        echo '::echo::off'
   
     # Show ref information
     - name: Show ref information
       if: ${{ runner.os != 'Windows' }}
       run: |
           echo "ref: ${{ steps.pre-checkout-other.outputs.ref }}"
-          echo "${{ PY_REF }}""
+          echo "ref2: ${{ env.PY_REF }}"
+
       shell: bash
 
     # Show ref information
@@ -116,7 +113,7 @@ runs:
       if: ${{ runner.os == 'Windows' }}
       run: |
           echo "ref: ${{ steps.pre-checkout-win.outputs.ref }}"
-          echo "${{ PY_REF }}""
+          echo "ref2: ${{ env.PY_REF }}"
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
