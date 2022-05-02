@@ -80,7 +80,13 @@ jobs:
       - name: Checkout this repository with own action (last deployed)
         uses: rohmanngmbh/action-checkout-repo@v1.1.0
         with:
-          path: myself-action
+          path: myself-action-release
+
+      # Run checkout this repository with own action (last main)
+      - name: Checkout this repository with own action (last main)
+        uses: rohmanngmbh/action-checkout-repo@main
+        with:
+          path: myself-action-main
 
       # List folder recursive (only for debugging)
       - name: List folders
