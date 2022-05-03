@@ -218,4 +218,4 @@ if __name__ == "__main__":
     # set output param: see https://errorsfixing.com/how-to-set-environment-variables-in-github-actions-using-python/
     env_file = os.environ['GITHUB_ENV']
     with open(env_file, "a") as myfile:
-        myfile.write("my_var={}".format(ret_ref))
+        myfile.write("MY_VAR={}".format(ret_ref))
