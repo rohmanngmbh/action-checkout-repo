@@ -13,8 +13,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # Test
-  Test:
+  # Test local action
+  Test local action:
     # The type of runner that the job will run on: ubuntu
     runs-on: ${{ matrix.os }}
     strategy:
@@ -33,7 +33,7 @@ jobs:
       - name: Checkout this repository
         uses: ./
         with:
-          path: myself
+          path: myself-ref
           ref: ${{ github.ref }}
         
       # Run checkout an extern example repository to 'extern'
@@ -53,14 +53,20 @@ jobs:
           ref: master
           lfs: true
 
-      # Run checkout this repository to path 'myself-alt-ref-default' to choose default branch
+      # Run checkout this repository to path 'default' to choose default branch
+      - name: Checkout this repository at default reference
+        uses: ./
+        with:
+          path: myself-default
+
+      # Run checkout this repository to path 'alt-ref-default' to choose default branch
       - name: Checkout this repository at alternative reference
         uses: ./
         with:
           path: myself-alt-ref-default
           ref: not/existing/feature/branch
         
-      # Run checkout this repository to path 'myself-alt-ref-branch' to choose an explicit alternative branch
+      # Run checkout this repository to path 'alt-ref-branch' to choose an explicit alternative branch
       - name: Checkout this repository at alternative reference (branch)
         uses: ./
         with:
@@ -68,7 +74,7 @@ jobs:
           ref: not/existing/feature/branch
           alt_ref: develop
 
-      # Run checkout this repository to path 'myself-alt-ref-tag' to choose an explicit alternative tag
+      # Run checkout this repository to path 'alt-ref-tag' to choose an explicit alternative tag
       - name: Checkout this repository at alternative reference (tag)
         uses: ./
         with:
@@ -76,20 +82,84 @@ jobs:
           ref: not/existing/feature/branch
           alt_ref: v0.1
 
-      # Run checkout this repository with own action (last deployed)
-      - name: Checkout this repository with own action (last deployed)
-        uses: rohmanngmbh/action-checkout-repo@v1.1.0
-        with:
-          path: myself-action-release
-
-      # Run checkout this repository with own action (last main)
-      - name: Checkout this repository with own action (last main)
-        uses: rohmanngmbh/action-checkout-repo@main
-        with:
-          path: myself-action-main
-
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
           ls -R
     
+  # Test marketplace action
+  Test marketplace action:
+    # The type of runner that the job will run on: ubuntu
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+      fail-fast: false
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+
+      # Run checkout this repository with own action (last deployed)
+      - name: Checkout this repository with own action (last deployed)
+        uses: rohmanngmbh/action-checkout-repo@v1.1.0
+        with:
+          path: myself-release-ref
+          ref: ${{ github.ref }}
+
+      # Run checkout this repository with own action (last main)
+      - name: Checkout this repository with own action (last main)
+        uses: rohmanngmbh/action-checkout-repo@main
+        with:
+          path: myself-main-ref    
+          ref: ${{ github.ref }}
+        
+      # Run checkout an extern example repository to 'extern'
+      - name: Checkout an extern repository
+        uses: rohmanngmbh/action-checkout-repo@main
+        with:
+          repository: githubtraining/community-contributors
+          path: extern
+          ref: main
+
+      # Run checkout an git lfs example repository to folder 'git-lfs'
+      - name: Checkout a git-lfs repository
+        uses: rohmanngmbh/action-checkout-repo@main
+        with:
+          repository: Apress/repo-with-large-file-storage
+          path: git-lfs
+          ref: master
+          lfs: true
+
+      # Run checkout this repository to path 'default' to choose default branch
+      - name: Checkout this repository at default reference
+        uses: rohmanngmbh/action-checkout-repo@main
+        with:
+          path: myself-default
+
+      # Run checkout this repository to path 'alt-ref-default' to choose default branch
+      - name: Checkout this repository at alternative reference
+        uses: rohmanngmbh/action-checkout-repo@main
+        with:
+          path: myself-alt-ref-default
+          ref: not/existing/feature/branch
+        
+      # Run checkout this repository to path 'alt-ref-branch' to choose an explicit alternative branch
+      - name: Checkout this repository at alternative reference (branch)
+        uses: rohmanngmbh/action-checkout-repo@main
+        with:
+          path: myself-alt-ref-branch
+          ref: not/existing/feature/branch
+          alt_ref: develop
+
+      # Run checkout this repository to path 'alt-ref-tag' to choose an explicit alternative tag
+      - name: Checkout this repository at alternative reference (tag)
+        uses: rohmanngmbh/action-checkout-repo@main
+        with:
+          path: myself-alt-ref-tag
+          ref: not/existing/feature/branch
+          alt_ref: v0.1
+
+      # List folder recursive (only for debugging)
+      - name: List folders
+        run: |
+          ls -R
