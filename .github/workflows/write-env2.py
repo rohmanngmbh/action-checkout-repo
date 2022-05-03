@@ -1,5 +1,12 @@
 import os
 
+os.environ['b']
+
+# delete variable if exist
+if 'MY_VAR' in os.environ:
+    print("delete MY_VAR")
+    del os.environ['MY_VAR']
+
 env_file = os.getenv('GITHUB_ENV')
 
 bla = 'main'

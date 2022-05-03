@@ -33,14 +33,10 @@ jobs:
 
       - name: a
         run: |
-          pip install PyGithub
           python .github/workflows/write-env.py
         env: 
-          repository:  ${{ inputs.repository }}
-          ref:  ${{ env.MY_VAR }}
-          token: ${{ inputs.token }}
-          path: ${{ inputs.path }}
-          lfs: ${{ inputs.lfs }}
+          ref:  a
+
 
       - run: echo ${{ env.MY_VAR }}
 
@@ -52,10 +48,7 @@ jobs:
       - name: b
         run: python .github/workflows/write-env2.py
         env: 
-          repository:  ${{ inputs.repository }}
-          ref:  ${{ env.MY_VAR }}
-          token: ${{ inputs.token }}
-          path: ${{ inputs.path }}
-          lfs: ${{ inputs.lfs }}
+          ref:  b
+
           
       - run: echo ${{ env.MY_VAR }}

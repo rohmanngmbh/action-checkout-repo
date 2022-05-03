@@ -77,8 +77,8 @@ runs:
         INPUT_REPOSITORY:  ${{ inputs.repository }}
         INPUT_REF: ${{ inputs.ref }}
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
+
       run: |
-        pip install PyGithub
         python3 .github/workflows/write-env.py
       shell: bash
 
