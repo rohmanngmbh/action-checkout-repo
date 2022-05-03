@@ -31,7 +31,11 @@ jobs:
         with:
           ref: develop
 
-      - run: python .github/workflows/write-env.py
+      - name: a
+        run: python .github/workflows/write-env.py
+        env: 
+          EXAMPLE: Test
+
       - run: echo ${{ env.MY_VAR }}
 
       - name: Checkout action repository
@@ -39,5 +43,9 @@ jobs:
         with:
           ref: develop
 
-      - run: python .github/workflows/write-env2.py
+      - name: b
+        run: python .github/workflows/write-env2.py
+        env: 
+          EXAMPLE: Test
+          
       - run: echo ${{ env.MY_VAR }}
