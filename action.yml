@@ -109,13 +109,16 @@ runs:
         echo "*************** Pre-Run Checkout ***************"
         pip install -r requirements.txt
         python main.py
-        echo "erste sahne"
-        . $GITHUB_ENV
-        echo "zweite sahne"
-        echo "my_var: ${{ env.MY_VAR }}"
-        echo "dritte sahne"
-        cat $GITHUB_ENV
         echo "******************* Checkout *******************"
+
+    - run: echo ${{ env.MY_VAR }}
+      shell: bash
+
+    - run: python3 .github/workflows/write-env2.py
+      shell: bash
+      
+    - run: echo ${{ env.MY_VAR }}
+      shell: bash
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
