@@ -98,7 +98,6 @@ runs:
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on linux/mac
-      id: handle-ref-other
       if: ${{ runner.os != 'Windows' }}
       env:
         INPUT_TOKEN: ${{ inputs.token }}
@@ -120,7 +119,6 @@ runs:
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
-      id: handle-ref-win
       if: ${{ runner.os == 'Windows' }}
       env:
         INPUT_TOKEN: ${{ inputs.token }}
