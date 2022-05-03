@@ -14,7 +14,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # Test local action
-  Test local action:
+  Test-Local-Action:
     # The type of runner that the job will run on: ubuntu
     runs-on: ${{ matrix.os }}
     strategy:
@@ -88,7 +88,7 @@ jobs:
           ls -R
     
   # Test marketplace action
-  Test marketplace action:
+  Test-Marketplace-Action:
     # The type of runner that the job will run on: ubuntu
     runs-on: ${{ matrix.os }}
     strategy:
