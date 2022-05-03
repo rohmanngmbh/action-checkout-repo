@@ -36,7 +36,11 @@ jobs:
           pip install PyGithub
           python .github/workflows/write-env.py
         env: 
-          EXAMPLE: Test
+          repository:  ${{ inputs.repository }}
+          ref:  ${{ env.MY_VAR }}
+          token: ${{ inputs.token }}
+          path: ${{ inputs.path }}
+          lfs: ${{ inputs.lfs }}
 
       - run: echo ${{ env.MY_VAR }}
 
@@ -48,6 +52,10 @@ jobs:
       - name: b
         run: python .github/workflows/write-env2.py
         env: 
-          EXAMPLE: Test
+          repository:  ${{ inputs.repository }}
+          ref:  ${{ env.MY_VAR }}
+          token: ${{ inputs.token }}
+          path: ${{ inputs.path }}
+          lfs: ${{ inputs.lfs }}
           
       - run: echo ${{ env.MY_VAR }}
