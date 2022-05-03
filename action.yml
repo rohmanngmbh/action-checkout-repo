@@ -54,6 +54,14 @@ inputs:
     required: false
     default: ""
 
+outputs:
+  ref-win:
+    description: "New reference to checkout (Windows)"
+    value: ${{ steps.handle-ref-win.outputs.ref }}
+  ref-other:
+    description: "New reference to checkout (Other)"
+    value: ${{ steps.handle-ref-other.outputs.ref }}
+
 runs:
   using: "composite"
   steps:
@@ -67,7 +75,7 @@ runs:
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on linux/mac
-      id: pre-checkout-win
+      id: handle-ref-win
       if: ${{ runner.os != 'Windows' }}
       env:
         INPUT_TOKEN: ${{ inputs.token }}
@@ -91,7 +99,7 @@ runs:
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
-      id: pre-checkout-other
+      id: handle-ref-other
       if: ${{ runner.os == 'Windows' }}
       env:
         INPUT_TOKEN: ${{ inputs.token }}
@@ -114,8 +122,16 @@ runs:
   
     # Show ref information
     - name: Show ref information
+      if: ${{ runner.os == 'Windows' }}
       run: |
-          echo "my_var: ${{ env.my_var }}"
+          echo "${{ steps.handle-ref-win.outputs.ref }}""
+      shell: bash
+
+    # Show ref information
+    - name: Show ref information
+      if: ${{ runner.os == 'Windows' }}
+      run: |
+          echo "${{ steps.handle-ref-other.outputs.ref }}""
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
@@ -124,7 +140,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ env.my_var}}
+        ref:  ${{ steps.handle-ref-other.outputs.ref }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
@@ -135,7 +151,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ env.my_var }}
+        ref:  ${{ steps.handle-ref-win.outputs.ref }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
