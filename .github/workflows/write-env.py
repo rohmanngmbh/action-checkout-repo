@@ -8,6 +8,6 @@ if 'MY_VAR' in os.environ:
     del os.environ['MY_VAR']
 
 # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
-env_file = os.getenv('GITHUB_ENV')
+env_file = os.environ['GITHUB_ENV']
 with open(env_file, "a") as myfile:
     myfile.write("MY_VAR={}".format(ret_ref))
