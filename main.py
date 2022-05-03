@@ -115,104 +115,105 @@ def check_if_ref_exist(repo, ref_name) -> bool:
             return False
 
 
-if __name__ == "__main__":
-    """ Main function
-    Returns a (valid) existsing reference of a repository.
-    If my_ref exists: my_ref will be returned.
-    If not: alt_ref will be returned.
-    If alt_ref does not exist: the default branch will be returned.
+#if __name__ == "__main__":
     
-    Parameter:
-        see help function
+""" Main function
+Returns a (valid) existsing reference of a repository.
+If my_ref exists: my_ref will be returned.
+If not: alt_ref will be returned.
+If alt_ref does not exist: the default branch will be returned.
 
-    Example:
-        main.py --token ghp_dasdnkjasndausndknasdjunasiudnainsud --repository rohmanngmbh/action-checkout-repo --ref test --alt_ref develop
+Parameter:
+    see help function
 
-    """
-    ###########################################################################
-    # Setup input arguments
-    ###########################################################################
-    parser = argparse.ArgumentParser(description='Handle reference to checkout a repository')
+Example:
+    main.py --token ghp_dasdnkjasndausndknasdjunasiudnainsud --repository rohmanngmbh/action-checkout-repo --ref test --alt_ref develop
 
-    parser.add_argument('--token', help='ghp_dasdnkjasndausndknasdjunasiudnainsud')
-    parser.add_argument('--repository', help='The name of the repository (e.g. rohmanngmbh/action-checkout-repo)')
-    parser.add_argument('--ref', help='Reference branch or tag (default: default branch)')
-    parser.add_argument('--alt_ref', help='Alterntive reference branch or tag  (default: default branch)')
-    args = parser.parse_args()     # all not set parameter are 'None'
+"""
+###########################################################################
+# Setup input arguments
+###########################################################################
+parser = argparse.ArgumentParser(description='Handle reference to checkout a repository')
 
-    # handling for manual test (without using a action)
+parser.add_argument('--token', help='ghp_dasdnkjasndausndknasdjunasiudnainsud')
+parser.add_argument('--repository', help='The name of the repository (e.g. rohmanngmbh/action-checkout-repo)')
+parser.add_argument('--ref', help='Reference branch or tag (default: default branch)')
+parser.add_argument('--alt_ref', help='Alterntive reference branch or tag  (default: default branch)')
+args = parser.parse_args()     # all not set parameter are 'None'
 
-    # token management
-    try:
-        my_token = os.environ["INPUT_TOKEN"]
-    except:
-        # if no token is set: ask for manual input
-        if args.token is None:
-            args.token = input("Please insert your token:")
-        # set token
-        my_token = args.token
+# handling for manual test (without using a action)
 
-    # repository management
-    try:
-        my_repository = os.environ["INPUT_REPOSITORY"]
-    except:
-        # if no repository is set: ask for manual input
-        if args.repository is None:
-            args.repository = input("Please insert your repository:")
-        # set repository
-        my_repository = args.repository
+# token management
+try:
+    my_token = os.environ["INPUT_TOKEN"]
+except:
+    # if no token is set: ask for manual input
+    if args.token is None:
+        args.token = input("Please insert your token:")
+    # set token
+    my_token = args.token
 
+# repository management
+try:
+    my_repository = os.environ["INPUT_REPOSITORY"]
+except:
+    # if no repository is set: ask for manual input
+    if args.repository is None:
+        args.repository = input("Please insert your repository:")
+    # set repository
+    my_repository = args.repository
+
+# ref management
+try:
+    my_ref = os.environ["INPUT_REF"]
+except:
     # ref management
-    try:
-        my_ref = os.environ["INPUT_REF"]
-    except:
-        # ref management
-        # if ref project is set: ask for manual input
-        if args.ref is None:
-            my_ref = input("Please insert your ref:")
-        # take input from args
-        else:
-            my_ref = args.ref
-
-    # ref_alt management
-    try:
-        my_alt_ref = os.environ["INPUT_ALT_REF"]
-    except:
-        # if no alt_ref is set: take None
-        if args.alt_ref is None:
-            my_alt_ref = None
-        # take input from args
-        else:
-            my_alt_ref = args.alt_ref
-
-    # start pygithub session
-    g = Github(my_token)
-    # get repo
-    repo = g.get_repo(my_repository)
-
-    # if ref exist take regular ref
-    if check_if_ref_exist(repo, my_ref):
-        local_ref = my_ref
-    # if ref does not exist:
+    # if ref project is set: ask for manual input
+    if args.ref is None:
+        my_ref = input("Please insert your ref:")
+    # take input from args
     else:
-        # take alt ref, if exists
-        if check_if_ref_exist(repo, my_alt_ref):
-            local_ref = my_alt_ref
-        # take default ref if alt ref does not exist
-        else:
-            local_ref = repo.default_branch
+        my_ref = args.ref
 
-    ret_ref = _convert_ref_name(local_ref)
+# ref_alt management
+try:
+    my_alt_ref = os.environ["INPUT_ALT_REF"]
+except:
+    # if no alt_ref is set: take None
+    if args.alt_ref is None:
+        my_alt_ref = None
+    # take input from args
+    else:
+        my_alt_ref = args.alt_ref
 
-    # print information
-    print("Found following return ref '{}' for repository '{}' with input ref '{}' and input alt_ref '{}'.".format(ret_ref, repo.full_name, my_ref, my_alt_ref, ))
+# start pygithub session
+g = Github(my_token)
+# get repo
+repo = g.get_repo(my_repository)
 
-    # # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
-    # print(f"::set-output name=my_var::{ret_ref}")
+# if ref exist take regular ref
+if check_if_ref_exist(repo, my_ref):
+    local_ref = my_ref
+# if ref does not exist:
+else:
+    # take alt ref, if exists
+    if check_if_ref_exist(repo, my_alt_ref):
+        local_ref = my_alt_ref
+    # take default ref if alt ref does not exist
+    else:
+        local_ref = repo.default_branch
 
-    # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
-    env_file = os.getenv('GITHUB_ENV')
-    with open(env_file, "a") as myfile:
-        myfile.write("MY_VAR={}".format(ret_ref))
+ret_ref = _convert_ref_name(local_ref)
 
-    # os.environ['my_var'] = str(ret_ref)
+# print information
+print("Found following return ref '{}' for repository '{}' with input ref '{}' and input alt_ref '{}'.".format(ret_ref, repo.full_name, my_ref, my_alt_ref, ))
+
+# # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
+# print(f"::set-output name=my_var::{ret_ref}")
+
+# set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
+env_file = os.getenv('GITHUB_ENV')
+with open(env_file, "a") as myfile:
+    myfile.write("MY_VAR={}".format(ret_ref))
+
+# os.environ['my_var'] = str(ret_ref)
