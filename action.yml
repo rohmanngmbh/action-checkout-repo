@@ -82,6 +82,7 @@ runs:
         INPUT_REPOSITORY:  ${{ inputs.repository }}
         INPUT_REF: ${{ inputs.ref }}
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
+        my_var: ''
       shell: bash
       run: |
         pip3 install virtualenv
@@ -106,6 +107,7 @@ runs:
         INPUT_REPOSITORY:  ${{ inputs.repository }}
         INPUT_REF: ${{ inputs.ref }}
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
+        my_var: ''
       shell: cmd
       run: |
         pip install virtualenv
