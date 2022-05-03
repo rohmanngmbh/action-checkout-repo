@@ -124,14 +124,14 @@ runs:
     - name: Show ref information
       if: ${{ runner.os != 'Windows' }}
       run: |
-          echo "${{ steps.handle-ref-other.outputs.ref }}""
+          echo "${{ steps.handle-ref-other.outputs.ref }}"
       shell: bash
 
     # Show ref information
     - name: Show ref information
       if: ${{ runner.os == 'Windows' }}
       run: |
-          echo "${{ steps.handle-ref-win.outputs.ref }}""
+          echo "${{ steps.handle-ref-win.outputs.ref }}"
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
