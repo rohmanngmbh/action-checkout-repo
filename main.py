@@ -1,5 +1,6 @@
 import os
 import argparse
+#from environs import Env
 from github import Github
 
 def _convert_ref_name(ref_name:str, return_type:bool=False):
@@ -206,12 +207,12 @@ if __name__ == "__main__":
     # print information
     print("Found following return ref '{}' for repository '{}' with input ref '{}' and input alt_ref '{}'.".format(ret_ref, repo.full_name, my_ref, my_alt_ref, ))
 
-    # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
-    print(f"::set-output name=my_var::{ret_ref}")
+    # # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
+    # print(f"::set-output name=my_var::{ret_ref}")
 
-    # # set output param: see https://errorsfixing.com/how-to-set-environment-variables-in-github-actions-using-python/
-    # env_file = os.getenv('GITHUB_ENV')
-    # with open(env_file, "a") as myfile:
-    #     myfile.write("my_var={}".format(ret_ref))
+    # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
+    env_file = os.getenv('GITHUB_ENV')
+    with open(env_file, "a") as myfile:
+        myfile.write("MY_VAR={}".format(ret_ref))
 
-    os.environ['my_var'] = str(ret_ref)
+    # os.environ['my_var'] = str(ret_ref)

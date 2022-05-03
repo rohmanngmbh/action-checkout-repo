@@ -60,7 +60,7 @@ outputs:
       The branch, tag or SHA to checkout. When checking out the repository that
       triggered a workflow, this defaults to the reference or SHA for that
       event.  Otherwise, uses the default branch.
-    value: ${{ env.my_var }}
+    value: ${{ env.MY_VAR }}
 
 runs:
   using: "composite"
@@ -95,7 +95,7 @@ runs:
         python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         cd ..
-        echo "${{ env.my_var }}"
+        echo "${{ env.MY_VAR }}"
         echo "******************* Checkout *******************"
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
@@ -119,13 +119,13 @@ runs:
         deactivate
         python -m venv ~/venvs/venv3 --clear
         cd ..
-        echo "${{ env.my_var }}"
+        echo "${{ env.MY_VAR }}"
         echo "******************* Checkout *******************"
 
     # Show ref information
     - name: Show ref information
       run: |
-          echo "${{ env.my_var }}"
+          echo "${{ env.MY_VAR }}"
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
@@ -194,7 +194,3 @@ runs:
         git lfs pull --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}"
       shell: bash
 
-    # Cleanup env variable
-    - name: Cleanup environment variable
-      run: unset my_var
-      shell: bash
