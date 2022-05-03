@@ -126,12 +126,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
 
-      # Run checkout this repository with own action (last deployed)
-      - name: Checkout this repository with own action (last deployed)
-        uses: rohmanngmbh/action-checkout-repo@v1.1.0
-        with:
-          path: myself-release-ref
-          ref: ${{ github.ref }}
+      # # Run checkout this repository with own action (last deployed)
+      # - name: Checkout this repository with own action (last deployed)
+      #   uses: rohmanngmbh/action-checkout-repo@v1.1.0
+      #   with:
+      #     path: myself-release-ref
+      #     ref: ${{ github.ref }}
 
       # Run checkout this repository with own action (last main)
       - name: Checkout this repository with own action (last main)

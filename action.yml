@@ -98,7 +98,7 @@ runs:
         echo "erste sahne"
         . $GITHUB_ENV
         echo "zweite sahne"
-        echo "${{ env.MY_VAR }}"
+        echo "my_var: ${{ env.MY_VAR }}"
         echo "dritte sahne"
         cat $GITHUB_ENV
         echo "******************* Checkout *******************"
@@ -139,7 +139,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ env.my_var }}
+        ref:  ${{ env.MY_VAR }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
@@ -150,7 +150,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ env.my_var }}
+        ref:  ${{ env.MY_VAR }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}

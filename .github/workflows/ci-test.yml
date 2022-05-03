@@ -33,3 +33,6 @@ jobs:
 
       - run: python .github/workflows/write-env.py
       - run: echo ${{ env.MY_VAR }}
+
+      - run: python .github/workflows/write-env2.py
+      - run: echo ${{ env.MY_VAR }}
