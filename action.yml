@@ -134,6 +134,12 @@ runs:
           echo "${{ steps.handle-ref-win.outputs.ref }}"
       shell: bash
 
+    # Show ref information
+    - name: Show ref information
+      run: |
+          echo "${{ env.my_var }}"
+      shell: bash
+
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
       if: ${{ runner.os != 'Windows' }}
