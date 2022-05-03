@@ -1,0 +1,35 @@
+#######################################################
+# This is the main CI workflow test
+#######################################################
+name: CI-Test
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events
+  push:
+  pull_request:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # Test local action
+  Test-Local-Action:
+    # The type of runner that the job will run on: ubuntu
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+      fail-fast: false
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
+      # Checksout action repository under $GITHUB_WORKSPACE
+      - name: Checkout action repository
+        uses: actions/checkout@v3
+        with:
+          ref: develop
+
+      - run: python .github/workflows/write-env.py
+      - run: echo ${{ env.MY_VAR }}
