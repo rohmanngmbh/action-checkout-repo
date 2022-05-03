@@ -143,7 +143,11 @@ if __name__ == "__main__":
 
     # delete variable if exist
     if 'MY_VAR' in os.environ:
-        del os.environ['MY_VAR']
+        print("delete MY_VAR")
+        if hasattr(os, 'unsetenv'):
+            os.unsetenv('MY_VAR')
+        else:
+            os.putenv('_MY_VAR', '')
 
     # token management
     try:
