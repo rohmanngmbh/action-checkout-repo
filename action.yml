@@ -95,6 +95,7 @@ runs:
         python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         cd ..
+        echo "${{ env.my_var }}"
         echo "******************* Checkout *******************"
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
@@ -118,6 +119,7 @@ runs:
         deactivate
         python -m venv ~/venvs/venv3 --clear
         cd ..
+        echo "${{ env.my_var }}"
         echo "******************* Checkout *******************"
 
     # Show ref information
