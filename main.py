@@ -141,7 +141,9 @@ if __name__ == "__main__":
     parser.add_argument('--alt_ref', help='Alterntive reference branch or tag  (default: default branch)')
     args = parser.parse_args()     # all not set parameter are 'None'
 
-    # handling for manual test (without using a action)
+    # delet variable if exist
+    if 'MY_VAR' in os.environ:
+        del os.environ['MY_VAR']
 
     # token management
     try:
