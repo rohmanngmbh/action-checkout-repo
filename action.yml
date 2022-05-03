@@ -57,6 +57,13 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # Call normal checkout action: to checkout this repo, see https://github.com/actions/checkout
+    - name: Checkout this action repo
+      uses: actions/checkout@v3
+      with:
+        token: ${{ inputs.token }}
+        path: .temp
+
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on linux/mac
       id: pre-checkout-win
@@ -72,11 +79,13 @@ runs:
         python3 -m venv ~/venvs/venv3
         source ~/venvs/venv3/bin/activate
         echo "*************** Pre-Run Checkout ***************"
+        cd .temp
         pip3 install -r requirements.txt
         python3 main.py
         deactivate
         python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
+        cd ..
         echo "******************* Checkout *******************"
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
@@ -94,10 +103,12 @@ runs:
         python -m venv venv3
         .\venv3\Scripts\activate
         echo "*************** Pre-Run Checkout ***************"
+        cd .temp
         pip install -r requirements.txt
         python main.py
         deactivate
         python -m venv ~/venvs/venv3 --clear
+        cd ..
         echo "******************* Checkout *******************"
   
     # Show ref information
@@ -171,3 +182,5 @@ runs:
         cd ${{ inputs.path }}
         git lfs pull --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}"
       shell: bash
+
+
