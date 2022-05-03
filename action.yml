@@ -95,7 +95,9 @@ runs:
         python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         cd ..
+        . $GITHUB_ENV
         echo "${{ env.MY_VAR }}"
+        cat $GITHUB_ENV
         echo "******************* Checkout *******************"
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
