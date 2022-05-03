@@ -95,8 +95,11 @@ runs:
         python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         cd ..
+        echo "erste sahne"
         . $GITHUB_ENV
+        echo "zweite sahne"
         echo "${{ env.MY_VAR }}"
+        echo "dritte sahne"
         cat $GITHUB_ENV
         echo "******************* Checkout *******************"
 
