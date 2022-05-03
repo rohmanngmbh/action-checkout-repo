@@ -33,27 +33,42 @@ jobs:
 
       # Run checkout this repository to path 'myself'
       - name: Checkout this repository
+        id: myself-ref
         uses: ./
         with:
           path: myself-ref
           ref: ${{ github.ref }}
+
+      - name: Test myself-ref
+        run: |
+          test "${{ steps.myself-ref.outputs.ref == github.ref }}"
         
       # Run checkout an extern example repository to 'extern'
       - name: Checkout an extern repository
+        id: extern
         uses: ./
         with:
           repository: githubtraining/community-contributors
           path: extern
           ref: main
 
+      - name: Test extern
+        run: |
+          test "${{ steps.extern.outputs.ref == 'main' }}"
+
       # Run checkout an git lfs example repository to folder 'git-lfs'
       - name: Checkout a git-lfs repository
+        id: git-lfs
         uses: ./
         with:
           repository: Apress/repo-with-large-file-storage
           path: git-lfs
           ref: master
           lfs: true
+
+      - name: Test git-lfs
+        run: |
+          test "${{ steps.git-lfs.outputs.ref == 'master' }}"
 
       # Run checkout this repository to path 'default' to choose default branch
       - name: Checkout this repository at default reference
@@ -70,19 +85,29 @@ jobs:
         
       # Run checkout this repository to path 'alt-ref-branch' to choose an explicit alternative branch
       - name: Checkout this repository at alternative reference (branch)
+        id: alt-ref-branc
         uses: ./
         with:
           path: myself-alt-ref-branch
           ref: not/existing/feature/branch
           alt_ref: develop
 
+      - name: Test alt-ref-branch
+        run: |
+          test "${{ steps.alt-ref-branch.outputs.ref == 'develop' }}"
+
       # Run checkout this repository to path 'alt-ref-tag' to choose an explicit alternative tag
       - name: Checkout this repository at alternative reference (tag)
+        id: alt-ref-tag
         uses: ./
         with:
           path: myself-alt-ref-tag
           ref: not/existing/feature/branch
           alt_ref: v0.1
+
+      - name: Test alt-ref-tag
+        run: |
+          test "${{ steps.alt-ref-tag.outputs.ref == 'v0.1' }}"
 
       # List folder recursive (only for debugging)
       - name: List folders

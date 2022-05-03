@@ -209,9 +209,9 @@ if __name__ == "__main__":
     # # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
     # print(f"::set-output name=ref::{ret_ref}")
 
-    # # set output param: see https://errorsfixing.com/how-to-set-environment-variables-in-github-actions-using-python/
-    # env_file = os.environ('GITHUB_ENV')
-    # with open(env_file, "a") as myfile:
-    #     myfile.write("my_var={}".format(ret_ref))
+    # set output param: see https://errorsfixing.com/how-to-set-environment-variables-in-github-actions-using-python/
+    env_file = os.environ('GITHUB_ENV')
+    with open(env_file, "a") as myfile:
+        myfile.write("my_var={}".format(ret_ref))
 
-    os.environ['my_var'] = str(ret_ref)
+    # os.environ['my_var'] = str(ret_ref)

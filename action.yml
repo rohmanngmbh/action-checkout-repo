@@ -55,12 +55,12 @@ inputs:
     default: ""
 
 outputs:
-  ref-win:
-    description: "New reference to checkout (Windows)"
-    value: ${{ steps.handle-ref-win.outputs.ref }}
-  ref-other:
-    description: "New reference to checkout (Other)"
-    value: ${{ steps.handle-ref-other.outputs.ref }}
+  ref:
+    description: >
+      The branch, tag or SHA to checkout. When checking out the repository that
+      triggered a workflow, this defaults to the reference or SHA for that
+      event.  Otherwise, uses the default branch.
+    value: ${{ env.my_var }}
 
 runs:
   using: "composite"
@@ -82,7 +82,6 @@ runs:
         INPUT_REPOSITORY:  ${{ inputs.repository }}
         INPUT_REF: ${{ inputs.ref }}
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
-        my_var: ''
       shell: bash
       run: |
         pip3 install virtualenv
@@ -107,7 +106,6 @@ runs:
         INPUT_REPOSITORY:  ${{ inputs.repository }}
         INPUT_REF: ${{ inputs.ref }}
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
-        my_var: ''
       shell: cmd
       run: |
         pip install virtualenv
@@ -121,20 +119,6 @@ runs:
         python -m venv ~/venvs/venv3 --clear
         cd ..
         echo "******************* Checkout *******************"
-  
-    # Show ref information
-    - name: Show ref information
-      if: ${{ runner.os != 'Windows' }}
-      run: |
-          echo "${{ steps.handle-ref-other.outputs.ref }}"
-      shell: bash
-
-    # Show ref information
-    - name: Show ref information
-      if: ${{ runner.os == 'Windows' }}
-      run: |
-          echo "${{ steps.handle-ref-win.outputs.ref }}"
-      shell: bash
 
     # Show ref information
     - name: Show ref information
@@ -148,7 +132,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ steps.handle-ref-other.outputs.ref }}
+        ref:  ${{ env.my_var }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
@@ -159,7 +143,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ steps.handle-ref-win.outputs.ref }}
+        ref:  ${{ env.my_var }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
