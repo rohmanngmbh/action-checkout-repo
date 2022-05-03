@@ -32,7 +32,9 @@ jobs:
           ref: develop
 
       - name: a
-        run: python .github/workflows/write-env.py
+        run: |
+          pip install PyGithub
+          python .github/workflows/write-env.py
         env: 
           EXAMPLE: Test
 

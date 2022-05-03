@@ -116,75 +116,17 @@ def check_if_ref_exist(repo, ref_name) -> bool:
 
 
 if __name__ == "__main__":
-    
-    """ Main function
-    Returns a (valid) existsing reference of a repository.
-    If my_ref exists: my_ref will be returned.
-    If not: alt_ref will be returned.
-    If alt_ref does not exist: the default branch will be returned.
-
-    Parameter:
-        see help function
-
-    Example:
-        main.py --token ghp_dasdnkjasndausndknasdjunasiudnainsud --repository rohmanngmbh/action-checkout-repo --ref test --alt_ref develop
-
-    """
-    ###########################################################################
-    # Setup input arguments
-    ###########################################################################
-    parser = argparse.ArgumentParser(description='Handle reference to checkout a repository')
-
-    parser.add_argument('--token', help='ghp_dasdnkjasndausndknasdjunasiudnainsud')
-    parser.add_argument('--repository', help='The name of the repository (e.g. rohmanngmbh/action-checkout-repo)')
-    parser.add_argument('--ref', help='Reference branch or tag (default: default branch)')
-    parser.add_argument('--alt_ref', help='Alterntive reference branch or tag  (default: default branch)')
-    args = parser.parse_args()     # all not set parameter are 'None'
 
     # handling for manual test (without using a action)
 
-    # token management
-    try:
-        my_token = os.environ["INPUT_TOKEN"]
-    except:
-        # if no token is set: ask for manual input
-        if args.token is None:
-            args.token = input("Please insert your token:")
-        # set token
-        my_token = args.token
 
-    # repository management
-    try:
-        my_repository = os.environ["INPUT_REPOSITORY"]
-    except:
-        # if no repository is set: ask for manual input
-        if args.repository is None:
-            args.repository = input("Please insert your repository:")
-        # set repository
-        my_repository = args.repository
+    my_token = os.environ["INPUT_TOKEN"]
 
-    # ref management
-    try:
-        my_ref = os.environ["INPUT_REF"]
-    except:
-        # ref management
-        # if ref project is set: ask for manual input
-        if args.ref is None:
-            my_ref = input("Please insert your ref:")
-        # take input from args
-        else:
-            my_ref = args.ref
+    my_repository = os.environ["INPUT_REPOSITORY"]
 
-    # ref_alt management
-    try:
-        my_alt_ref = os.environ["INPUT_ALT_REF"]
-    except:
-        # if no alt_ref is set: take None
-        if args.alt_ref is None:
-            my_alt_ref = None
-        # take input from args
-        else:
-            my_alt_ref = args.alt_ref
+    my_ref = os.environ["INPUT_REF"]
+
+    my_alt_ref = os.environ["INPUT_ALT_REF"]
 
     # start pygithub session
     g = Github(my_token)
