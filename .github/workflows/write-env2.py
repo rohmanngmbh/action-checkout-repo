@@ -1,7 +1,5 @@
 import os
 
-os.environ['b']
-
 # delete variable if exist
 if 'MY_VAR' in os.environ:
     print("delete MY_VAR")

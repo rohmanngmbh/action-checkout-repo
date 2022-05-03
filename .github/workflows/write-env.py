@@ -1,6 +1,5 @@
 import os
 
-os.environ['a']
 ret_ref = 'develop'
 
 # delete variable if exist
