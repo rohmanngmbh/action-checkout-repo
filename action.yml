@@ -71,7 +71,15 @@ runs:
       with:
         ref: develop
 
-    - run: python3 .github/workflows/write-env.py
+    - name: a
+      env:
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_REPOSITORY:  ${{ inputs.repository }}
+        INPUT_REF: ${{ inputs.ref }}
+        INPUT_ALT_REF:  ${{ inputs.alt_ref }}
+      run: |
+        pip install PyGithub
+        python3 .github/workflows/write-env.py
       shell: bash
 
     - run: echo ${{ env.MY_VAR }}
@@ -82,7 +90,13 @@ runs:
       with:
         ref: develop
 
-    - run: python3 .github/workflows/write-env2.py
+    - name: b
+      env:
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_REPOSITORY:  ${{ inputs.repository }}
+        INPUT_REF: ${{ inputs.ref }}
+        INPUT_ALT_REF:  ${{ inputs.alt_ref }}
+      run: python3 .github/workflows/write-env2.py
       shell: bash
       
     - run: echo ${{ env.MY_VAR }}
@@ -108,15 +122,9 @@ runs:
       run: |
         echo "*************** Pre-Run Checkout ***************"
         pip install -r requirements.txt
-        python main.py
+        python3 main.py
         echo "******************* Checkout *******************"
 
-    - run: echo ${{ env.MY_VAR }}
-      shell: bash
-
-    - run: python3 .github/workflows/write-env2.py
-      shell: bash
-      
     - run: echo ${{ env.MY_VAR }}
       shell: bash
 
