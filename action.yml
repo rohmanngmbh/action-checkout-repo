@@ -206,4 +206,7 @@ runs:
         git lfs pull --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}"
       shell: bash
 
-
+    # Cleanup env variable
+    - name: Cleanup environment variable
+      run: unset my_var
+      shell: bash
