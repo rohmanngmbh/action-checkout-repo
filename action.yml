@@ -71,7 +71,7 @@ runs:
       with:
         ref: develop
 
-    - run: python .github/workflows/write-env.py
+    - run: python3 .github/workflows/write-env.py
       shell: bash
 
     - run: echo ${{ env.MY_VAR }}
@@ -82,7 +82,7 @@ runs:
       with:
         ref: develop
 
-    - run: python .github/workflows/write-env2.py
+    - run: python3 .github/workflows/write-env2.py
       shell: bash
       
     - run: echo ${{ env.MY_VAR }}
@@ -94,11 +94,11 @@ runs:
       with:
         token: ${{ inputs.token }}
         ref: develop
-        path: .temp
+        repository: rohmanngmbh/action-checkout-repo
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on linux/mac
-      id: handle-ref-win
+      id: handle-ref-other
       if: ${{ runner.os != 'Windows' }}
       env:
         INPUT_TOKEN: ${{ inputs.token }}
@@ -107,17 +107,9 @@ runs:
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
       shell: bash
       run: |
-        pip3 install virtualenv
-        python3 -m venv ~/venvs/venv3
-        source ~/venvs/venv3/bin/activate
         echo "*************** Pre-Run Checkout ***************"
-        cd .temp
-        pip3 install -r requirements.txt
-        python3 main.py
-        deactivate
-        python3 -m venv ~/venvs/venv3 --clear
-        rm -rf ~/venvs/venv3
-        cd ..
+        pip install -r requirements.txt
+        python main.py
         echo "erste sahne"
         . $GITHUB_ENV
         echo "zweite sahne"
@@ -128,7 +120,7 @@ runs:
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
-      id: handle-ref-other
+      id: handle-ref-win
       if: ${{ runner.os == 'Windows' }}
       env:
         INPUT_TOKEN: ${{ inputs.token }}
@@ -141,12 +133,10 @@ runs:
         python -m venv venv3
         .\venv3\Scripts\activate
         echo "*************** Pre-Run Checkout ***************"
-        cd .temp
         pip install -r requirements.txt
         python main.py
         deactivate
         python -m venv ~/venvs/venv3 --clear
-        cd ..
         echo "${{ env.MY_VAR }}"
         echo "******************* Checkout *******************"
 
