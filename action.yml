@@ -65,6 +65,24 @@ outputs:
 runs:
   using: "composite"
   steps:
+      # Checksout action repository under $GITHUB_WORKSPACE
+      - name: Checkout action repository
+        uses: actions/checkout@v3
+        with:
+          
+          ref: develop
+
+      - run: python .github/workflows/write-env.py
+      - run: echo ${{ env.MY_VAR }}
+
+      - name: Checkout action repository
+        uses: actions/checkout@v3
+        with:
+          ref: develop
+
+      - run: python .github/workflows/write-env2.py
+      - run: echo ${{ env.MY_VAR }}
+
     # Call normal checkout action: to checkout this repo, see https://github.com/actions/checkout
     - name: Checkout this action repo
       uses: actions/checkout@v3
