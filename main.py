@@ -143,8 +143,10 @@ if __name__ == "__main__":
     if 'MY_VAR' in os.environ:
         print("delete MY_VAR")
         if hasattr(os, 'unsetenv'):
+            print('use unset')
             os.unsetenv('MY_VAR')
         else:
+            print('use putenv')
             os.putenv('_MY_VAR', '')
 
     # token management
@@ -215,7 +217,7 @@ if __name__ == "__main__":
     # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
     # print(f"::set-output name=ref::{ret_ref}")
 
-    # set output param: see https://errorsfixing.com/how-to-set-environment-variables-in-github-actions-using-python/
+    # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
     env_file = os.environ['GITHUB_ENV']
     with open(env_file, "a") as myfile:
         myfile.write("MY_VAR={}".format(ret_ref))
