@@ -139,17 +139,17 @@ if __name__ == "__main__":
     parser.add_argument('--alt_ref', help='Alterntive reference branch or tag  (default: default branch)')
     args = parser.parse_args()     # all not set parameter are 'None'
 
-    modify = False
-    # delete variable if exist
-    if 'MY_VAR' in os.environ:
-        modify = True
-        # print("delete MY_VAR")
-        # if hasattr(os, 'unsetenv'):
-        #     print('use unset')
-        #     os.unsetenv('MY_VAR')
-        # else:
-        #     print('use putenv')
-        #     os.putenv('_MY_VAR', '')
+    # modify = False
+    # # delete variable if exist
+    # if 'GITHUB_MY_VAR' in os.environ:
+    #     modify = True
+    #     # print("delete GITHUB_MY_VAR")
+    #     # if hasattr(os, 'unsetenv'):
+    #     #     print('use unset')
+    #     #     os.unsetenv('GITHUB_MY_VAR')
+    #     # else:
+    #     #     print('use putenv')
+    #     #     os.putenv('_GITHUB_MY_VAR', '')
 
     # token management
     try:
@@ -221,12 +221,12 @@ if __name__ == "__main__":
 
     # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
     env_file = os.environ['GITHUB_ENV']
-    if modify:
-        print('modify')
-        with open(env_file, "r") as myfile:
-            print(myfile.readlines())
-        with open(env_file, "a") as myfile:
-            myfile.write("MY_VAR={}".format(ret_ref))
-    else:
-        with open(env_file, "a") as myfile:
-            myfile.write("MY_VAR={}".format(ret_ref))
+    # if modify:
+    #     print('modify')
+    #     with open(env_file, "r") as myfile:
+    #         print(myfile.readlines())
+    #     with open(env_file, "a") as myfile:
+    #         myfile.write("GITHUB_MY_VAR={}".format(ret_ref))
+    # else:
+    with open(env_file, "a") as myfile:
+        myfile.write("GITHUB_MY_VAR={}".format(ret_ref))
