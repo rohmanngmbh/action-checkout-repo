@@ -3,7 +3,7 @@ import argparse
 #from environs import Env
 from github import Github
 
-def _convert_ref_name(ref_name:str, return_type:bool=False):
+def _convert_ref_name(ref_name, return_type=False):
     ''' convert ref name if necessary
 
     Example:
