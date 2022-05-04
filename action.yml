@@ -124,11 +124,17 @@ runs:
     # Show ref information
     - name: Show ref information
       run: |
+          echo 'eins'
           echo $MY_VAR
+          echo 'zwei'
           echo $MY_VARI
+          echo 'drei'
           echo "${{ env.MY_VAR }}"
+          echo 'vier'
           echo "${{ env.MY_VARI }}"
+          echo 'fuenf'
           echo "${{ steps.pre-checkout-other.outputs.MY_VAR }}"
+          echo 'sechs'
           echo "${{ steps.pre-checkout-other.outputs.MY_VARI }}"
       shell: bash
 
