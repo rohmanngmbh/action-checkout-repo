@@ -40,7 +40,7 @@ jobs:
 
       # Test
       - name: Test
-        if:  env.my_ref != ${GITHUB_REF##*/}
+        if:  env.my_ref != github.ref##*
         run: exit 1
 
       # List folder recursive (only for debugging)
