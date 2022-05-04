@@ -211,4 +211,4 @@ if __name__ == "__main__":
     env_file = os.environ['GITHUB_ENV']
     myfile = open(env_file, "a")
     myfile.write("MY_REF={}".format(ret_ref))
-    myfile.colse()
+    myfile.close()
