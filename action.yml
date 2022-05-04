@@ -10,6 +10,7 @@ inputs:
   repository:
     description: 'Repository name with owner. For example, actions/checkout'
     default: ${{ github.repository }}
+    required: false
   ref:
     description: >
       The branch, tag or SHA to checkout. When checking out the repository that
@@ -34,25 +35,28 @@ inputs:
     default: ${{ github.token }}
   path:
     description: 'Relative path under $GITHUB_WORKSPACE to place the repository'
+    required: false
+    default: ''
   lfs:
     description: 'Whether to download Git-LFS files'
-    default: false
+    required: false
+    default: 'false'
   submodules:
     description: >
       Whether to checkout submodules: `true` to checkout submodules or `recursive` to
       recursively checkout submodules.
     required: false
-    default: false
+    default: 'false'
   include:
     description: >
       Explicitly include files for LFS
     required: false
-    default: "*"
+    default: '*'
   exclude:
     description: >
       Explicitly exclude files for LFS
     required: false
-    default: ""
+    default: ''
 
 runs:
   using: "composite"
@@ -88,14 +92,9 @@ runs:
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
       shell: cmd
       run: |
-        pip3 install virtualenv
-        python3 -m venv venv3
-        .\venv3\Scripts\activate
         echo "*************** Pre-Run Checkout ***************"
-        pip3 install -r requirements.txt
-        python3 main.py
-        deactivate
-        python3 -m venv ~/venvs/venv3 --clear
+        pip install -r requirements.txt
+        python main.py
         echo "******************* Checkout *******************"
   
     # Show ref information
