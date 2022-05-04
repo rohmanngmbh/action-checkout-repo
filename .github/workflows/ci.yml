@@ -13,8 +13,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # Test-Local-myself
-  Test-Local-myself:
+  # Test-local-myself
+  Test-local-myself:
     # The type of runner that the job will run on: ubuntu
     runs-on: ${{ matrix.os }}
     strategy:
@@ -31,26 +31,25 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      # Run own local checkout action
+      # Run own repository checkout using local action
       - name: Checkout this repository
         uses: ./
         with:
           path: myself
           ref: ${{ github.ref }}
-        
+
       # Test
       - name: Test
-        run: test ${{ env.my_ref == github.ref}}
-        shell: bash
+        if:  env.my_ref != github.ref
+        run: exit 1
 
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
           ls -R
 
-  # Test-Local
-  Test-Local:
-
+  # Test-local-extern
+  Test-local-extern:
     # The type of runner that the job will run on: ubuntu
     runs-on: ${{ matrix.os }}
     strategy:
@@ -60,13 +59,14 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    
       # Checksout action repository under $GITHUB_WORKSPACE
       - name: Checkout action repository
         uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
 
-      # Run checkout an extern example repository to 'extern'
+      # Run extern repository checkout using local action
       - name: Checkout an extern repository
         uses: ./
         with:
@@ -74,7 +74,35 @@ jobs:
           path: extern
           ref: main
 
-      # Run checkout an git lfs example repository to folder 'git-lfs'
+      # Test
+      - name: Test
+        if:  env.my_ref != 'main'
+        run: exit 1
+
+      # List folder recursive (only for debugging)
+      - name: List folders
+        run: |
+          ls -R
+
+  # Test-local-lfs
+  Test-local-lfs:
+    # The type of runner that the job will run on: ubuntu
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+      fail-fast: false
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
+      # Checksout action repository under $GITHUB_WORKSPACE
+      - name: Checkout action repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      # Run git lfs example repository checkout using local action
       - name: Checkout a git-lfs repository
         uses: ./
         with:
@@ -83,14 +111,70 @@ jobs:
           ref: master
           lfs: true
 
-      # Run checkout this repository to path 'myself-alt-ref-default' to choose default branch
+      # Test
+      - name: Test
+        if:  env.my_ref != 'master'
+        run: exit 1
+
+      # List folder recursive (only for debugging)
+      - name: List folders
+        run: |
+          ls -R
+
+  # Test-local-myself-branch-not-exist
+  Test-local-myself-branch-not-exist:
+    # The type of runner that the job will run on: ubuntu
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+      fail-fast: false
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
+      # Checksout action repository under $GITHUB_WORKSPACE
+      - name: Checkout action repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      # Run own repository checkout using local action with not existing branch to default
       - name: Checkout this repository at alternative reference
         uses: ./
         with:
-          path: myself-alt-ref-default
+          path: myself-branch-not-exist
           ref: not/existing/feature/branch
-        
-      # Run checkout this repository to path 'myself-alt-ref-branch' to choose an explicit alternative branch
+
+      # Test
+      - name: Test
+        if:  env.my_ref != 'main'
+        run: exit 1
+
+      # List folder recursive (only for debugging)
+      - name: List folders
+        run: |
+          ls -R
+
+  # Test-local-myself-branch-alt-ref
+  Test-local-myself-branch-alt-ref:
+    # The type of runner that the job will run on: ubuntu
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+      fail-fast: false
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
+      # Checksout action repository under $GITHUB_WORKSPACE
+      - name: Checkout action repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      # Run own repository checkout using local action with not existing branch and alt ref
       - name: Checkout this repository at alternative reference (branch)
         uses: ./
         with:
@@ -98,7 +182,35 @@ jobs:
           ref: not/existing/feature/branch
           alt_ref: develop
 
-      # Run checkout this repository to path 'myself-alt-ref-tag' to choose an explicit alternative tag
+      # Test
+      - name: Test
+        if:  env.my_ref != 'develop'
+        run: exit 1
+
+      # List folder recursive (only for debugging)
+      - name: List folders
+        run: |
+          ls -R
+
+  # Test-local-myself-branch-alt-ref-tag
+  Test-local-myself-branch-alt-ref-tag:
+    # The type of runner that the job will run on: ubuntu
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+      fail-fast: false
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
+      # Checksout action repository under $GITHUB_WORKSPACE
+      - name: Checkout action repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      # Run own repository checkout using local action with not existing branch and alt ref
       - name: Checkout this repository at alternative reference (tag)
         uses: ./
         with:
@@ -106,20 +218,40 @@ jobs:
           ref: not/existing/feature/branch
           alt_ref: v0.1
 
-      # Run checkout this repository with own action (last deployed)
-      - name: Checkout this repository with own action (last deployed)
-        uses: rohmanngmbh/action-checkout-repo@v1.1.0
-        with:
-          path: myself-action-release
+      # Test
+      - name: Test
+        if:  env.my_ref != 'v0.1'
+        run: exit 1
 
+      # List folder recursive (only for debugging)
+      - name: List folders
+        run: |
+          ls -R
+
+  # TTest-marketplace-myself
+  Test-marketplace-myself:
+    # The type of runner that the job will run on: ubuntu
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+      fail-fast: false
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
       # Run checkout this repository with own action (last main)
       - name: Checkout this repository with own action (last main)
         uses: rohmanngmbh/action-checkout-repo@main
         with:
           path: myself-action-main
 
+      # Test
+      - name: Test
+        if:  env.my_ref != 'main'
+        run: exit 1
+
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
           ls -R
-    
