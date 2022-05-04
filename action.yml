@@ -59,7 +59,6 @@ runs:
   steps:
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on linux/mac
-      id: pre-checkout-win
       if: ${{ runner.os != 'Windows' }}
       env:
         INPUT_TOKEN: ${{ inputs.token }}
@@ -81,7 +80,6 @@ runs:
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
-      id: pre-checkout-other
       if: ${{ runner.os == 'Windows' }}
       env:
         INPUT_TOKEN: ${{ inputs.token }}
