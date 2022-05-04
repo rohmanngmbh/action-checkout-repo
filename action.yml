@@ -110,6 +110,7 @@ runs:
     # Show ref information
     - name: Show ref information
       run: |
+          echo $GITHUB_ENV
           echo "GITHUB_MY_VAR: ${{ env.GITHUB_MY_VAR }}"
       shell: bash
 
