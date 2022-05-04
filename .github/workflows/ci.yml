@@ -40,7 +40,7 @@ jobs:
 
       # Test
       - name: Test
-        if:  ${{ endsWith( github.ref, env.my_ref ) }}
+        if:  ${{ !endsWith( github.ref, env.my_ref ) }}
         run: |
           echo ${{ env.my_ref }}
           echo ${{ github.ref }}
@@ -262,7 +262,7 @@ jobs:
 
       # Test
       - name: Test
-        if: ${{ endsWith( github.ref, env.my_ref) }}
+        if: ${{ !endsWith( github.ref, env.my_ref) }}
         run: |
           echo ${{ env.my_ref }}
           echo ${{ github.ref }}
