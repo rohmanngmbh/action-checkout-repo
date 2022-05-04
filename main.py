@@ -221,6 +221,7 @@ if __name__ == "__main__":
 
     # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
     env_file = os.environ['GITHUB_ENV']
+    print(env_file)
     # if modify:
     #     print('modify')
     #     with open(env_file, "r") as myfile:
