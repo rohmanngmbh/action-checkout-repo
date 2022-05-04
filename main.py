@@ -139,8 +139,6 @@ if __name__ == "__main__":
     parser.add_argument('--alt_ref', help='Alterntive reference branch or tag  (default: default branch)')
     args = parser.parse_args()     # all not set parameter are 'None'
 
-    # handling for manual test (without using a action)
-
     # token management
     try:
         my_token = os.environ["INPUT_TOKEN"]
@@ -209,7 +207,7 @@ if __name__ == "__main__":
     # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
     # print(f"::set-output name=ref::{ret_ref}")
 
-    # set output param: see https://errorsfixing.com/how-to-set-environment-variables-in-github-actions-using-python/
+    # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
     env_file = os.getenv('GITHUB_ENV')
     with open(env_file, "a") as myfile:
-        myfile.write("my_var={}".format(ret_ref))
+        myfile.write("my_ref={}".format(ret_ref))

@@ -13,8 +13,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # Test
-  Test:
+  # Test-Local-myself
+  Test-Local-myself:
     # The type of runner that the job will run on: ubuntu
     runs-on: ${{ matrix.os }}
     strategy:
@@ -28,14 +28,27 @@ jobs:
       # Checksout action repository under $GITHUB_WORKSPACE
       - name: Checkout action repository
         uses: actions/checkout@v3
+        ref: ${{ github.ref }}
 
-      # Run checkout this repository to path 'myself'
+      # Run own local checkout action
       - name: Checkout this repository
         uses: ./
         with:
           path: myself
           ref: ${{ github.ref }}
         
+      # Test
+      - name: Test
+        run: test ${{ env.my_ref == github.ref}}
+        shell: bash
+
+      # List folder recursive (only for debugging)
+      - name: List folders
+        run: |
+          ls -R
+
+  # Test-Local-myself
+  Test-Local-myself:
       # Run checkout an extern example repository to 'extern'
       - name: Checkout an extern repository
         uses: ./
