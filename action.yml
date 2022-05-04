@@ -61,6 +61,13 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # Call normal checkout action: see https://github.com/actions/checkout
+    - name: Checkout own action code
+      uses: actions/checkout@v3
+      with:
+        repository: rohmanngmbh/action-checkout-repo
+        ref: main
+
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on linux/mac
       if: ${{ runner.os != 'Windows' }}

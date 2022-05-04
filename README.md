@@ -6,6 +6,11 @@ We added a special reference handling called "alt_ref". This feature we need in 
 
 Check this out on [Github Marketplace](https://github.com/marketplace/actions/checkout-repo).
 
+Hint(s):
+- Actual you use only for once the action due to [this](https://github.community/t/sharing-environment-variables-between-steps-in-an-action-yml-wrong-value-in-case-of-mulitply-call/248736) bug. 
+- Windows did not use an own virtual environment (python)
+- This works only for GitHub Repos
+
 ## Options
 
 This action supports:

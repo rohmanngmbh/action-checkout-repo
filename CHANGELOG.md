@@ -7,13 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [1.1.0] - 2022-05-28
+## [1.2.0] - 2022-05-04
+
+### Fixed
+- ref name
+- check out this own repo at action
+
+## [1.1.0] - 2022-04-28
 
 ### Added
 - support for windows and mac
 - changelog file
 
-## [1.0.0] - 2022-05-28
+## [1.0.0] - 2022-04-28
 
 ### Added
 - total functionality
@@ -21,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - submodules
  - python code for handling ref
 
-## [0.1.0] - 2022-05-27
+## [0.1.0] - 2022-04-27
 
 ### Added
 - init releas
