@@ -38,11 +38,6 @@ jobs:
           path: myself
           ref: ${{ github.ref }}
 
-      # Test
-      - name: Test
-        if:  env.my_ref != github.ref##*
-        run: exit 1
-
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
