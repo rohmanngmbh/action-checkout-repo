@@ -122,10 +122,6 @@ runs:
     # Show ref information
     - name: Show ref information
       run: |
-          echo 'ref'
-          echo $MY_REF
-          echo 'ren-ref'
-          echo "${{ env.MY_REF }}"
           echo 'random1'
           echo $MY_VAR1
           echo 'env-random1'
