@@ -210,5 +210,5 @@ if __name__ == "__main__":
     # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
     env_file = os.environ['GITHUB_ENV']
     myfile = open(env_file, "a")
-    myfile.write("MY_REF={}".format(ret_ref))
+    myfile.write(f"MY_REF={ret_ref}")
     myfile.close()
