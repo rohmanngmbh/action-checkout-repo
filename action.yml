@@ -67,6 +67,7 @@ runs:
       with:
         repository: rohmanngmbh/action-checkout-repo
         ref: main
+        path: .temp
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on linux/mac
@@ -78,6 +79,7 @@ runs:
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
       shell: bash
       run: |
+        cd .temp
         pip3 install virtualenv
         python3 -m venv ~/venvs/venv3
         source ~/venvs/venv3/bin/activate
@@ -87,6 +89,7 @@ runs:
         deactivate
         python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
+        cd ..
         echo "******************* Checkout *******************"
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
@@ -100,8 +103,10 @@ runs:
       shell: cmd
       run: |
         echo "*************** Pre-Run Checkout ***************"
+        cd .temp
         pip install -r requirements.txt
         python main.py
+        cd ..
         echo "******************* Checkout *******************"
   
     # Show ref information
