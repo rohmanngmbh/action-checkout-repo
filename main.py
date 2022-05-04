@@ -217,17 +217,17 @@ if __name__ == "__main__":
     print("Found following return ref '{}' for repository '{}' with input ref '{}' and input alt_ref '{}'.".format(ret_ref, repo.full_name, my_ref, my_alt_ref, ))
 
     # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
-    # print(f"::set-output name=ref::{ret_ref}")
+    print(f"::set-output name=ref::{ret_ref}")
 
-    # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
-    env_file = os.environ['GITHUB_ENV']
-    print(env_file)
-    # if modify:
-    #     print('modify')
-    #     with open(env_file, "r") as myfile:
-    #         print(myfile.readlines())
-    #     with open(env_file, "a") as myfile:
-    #         myfile.write("GITHUB_MY_VAR={}".format(ret_ref))
-    # else:
-    with open(env_file, "a") as myfile:
-        myfile.write("GITHUB_MY_VAR={}".format(ret_ref))
+    # # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
+    # env_file = os.environ['GITHUB_ENV']
+    # print(env_file)
+    # # if modify:
+    # #     print('modify')
+    # #     with open(env_file, "r") as myfile:
+    # #         print(myfile.readlines())
+    # #     with open(env_file, "a") as myfile:
+    # #         myfile.write("GITHUB_MY_VAR={}".format(ret_ref))
+    # # else:
+    # with open(env_file, "a") as myfile:
+    #     myfile.write("GITHUB_MY_VAR={}".format(ret_ref))
