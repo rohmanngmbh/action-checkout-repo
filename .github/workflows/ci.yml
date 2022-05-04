@@ -40,8 +40,11 @@ jobs:
 
       # Test
       - name: Test
-        if: endsWith( github.ref, env.my_ref )
-        run: exit 1
+        if:  ${{ endsWith( github.ref, env.my_ref ) }}
+        run: |
+          echo ${{ env.my_ref }}
+          echo ${{ github.ref }}
+          exit 1
 
       # List folder recursive (only for debugging)
       - name: List folders
@@ -76,8 +79,11 @@ jobs:
 
       # Test
       - name: Test
-        if:  env.my_ref != 'main'
-        run: exit 1
+        if:  ${{ env.my_ref != 'main' }}
+        run: |
+          echo ${{ env.my_ref }}
+          echo ${{ github.ref }}
+          exit 1
 
       # List folder recursive (only for debugging)
       - name: List folders
@@ -113,8 +119,10 @@ jobs:
 
       # Test
       - name: Test
-        if:  env.my_ref != 'master'
-        run: exit 1
+        if:  ${{ env.my_ref != 'master' }}
+        run: |
+          echo ${{ env.my_ref }}
+          exit 1
 
       # List folder recursive (only for debugging)
       - name: List folders
@@ -148,8 +156,10 @@ jobs:
 
       # Test
       - name: Test
-        if:  env.my_ref != 'main'
-        run: exit 1
+        if:  ${{ env.my_ref != 'main' }}
+        run: |
+          echo ${{ env.my_ref }}
+          exit 1
 
       # List folder recursive (only for debugging)
       - name: List folders
@@ -184,8 +194,10 @@ jobs:
 
       # Test
       - name: Test
-        if:  env.my_ref != 'develop'
-        run: exit 1
+        if:  ${{ env.my_ref != 'develop' }}
+        run: |
+          echo ${{ env.my_ref }}
+          exit 1
 
       # List folder recursive (only for debugging)
       - name: List folders
@@ -220,8 +232,10 @@ jobs:
 
       # Test
       - name: Test
-        if:  env.my_ref != 'v0.1'
-        run: exit 1
+        if:  ${{ env.my_ref != 'v0.1' }}
+        run: |
+          echo ${{ env.my_ref }}
+          exit 1
 
       # List folder recursive (only for debugging)
       - name: List folders
@@ -248,8 +262,11 @@ jobs:
 
       # Test
       - name: Test
-        if: endsWith( github.ref, env.my_ref )
-        run: exit 1
+        if: ${{ endsWith( github.ref, env.my_ref) }}
+        run: |
+          echo ${{ env.my_ref }}
+          echo ${{ github.ref }}
+          exit 1
 
       # List folder recursive (only for debugging)
       - name: List folders
