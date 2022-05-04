@@ -86,8 +86,11 @@ runs:
         rm -rf ~/venvs/venv3
         echo "******************* Checkout *******************"
         VAR1=$RANDOM
-        echo "MY_VAR=$(echo $VAR1)" >> $GITHUB_ENV
+        VAR2=$RANDOM
+        echo "MY_VAR1=$(echo $VAR1)" >> $GITHUB_ENV
+        echo "MY_VAR2=$(echo $VAR2)" >> $GITHUB_ENV
         echo $VAR1
+        echo $VAR2
         echo 'finished'
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
@@ -111,8 +114,11 @@ runs:
         python -m venv ~/venvs/venv3 --clear
         echo "******************* Checkout *******************"
         VAR1=$RANDOM
-        echo "MY_VAR=$(echo $VAR1)" >> $GITHUB_ENV
+        VAR2=$RANDOM
+        echo "MY_VAR1=$(echo $VAR1)" >> $GITHUB_ENV
+        echo "MY_VAR2=$(echo $VAR2)" >> $GITHUB_ENV
         echo $VAR1
+        echo $VAR2
         echo 'finished'
   
     # Show ref information
@@ -122,10 +128,14 @@ runs:
           echo $MY_REF
           echo 'ren-ref'
           echo "${{ env.MY_REF }}"
-          echo 'random'
-          echo $MY_VAR
-          echo 'env-random'
-          echo "${{ env.MY_VAR }}"
+          echo 'random1'
+          echo $MY_VAR1
+          echo 'env-random1'
+          echo "${{ env.MY_VAR1 }}"
+          echo 'random2'
+          echo $MY_VAR2
+          echo 'env-random2'
+          echo "${{ env.MY_VAR2 }}"
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
