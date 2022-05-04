@@ -85,8 +85,10 @@ runs:
         python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         echo "******************* Checkout *******************"
-        echo "MY_VAR=$(echo $RANDOM)" >> $GITHUB_ENV
-        echo $MY_VAR
+        VAR1=$RANDOM
+        echo "MY_VAR=$(echo $VAR1)" >> $GITHUB_ENV
+        echo $VAR1
+        echo 'finished'
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
@@ -108,7 +110,7 @@ runs:
         deactivate
         python -m venv ~/venvs/venv3 --clear
         echo "******************* Checkout *******************"
-        VAR1=$RANDOM)
+        VAR1=$RANDOM
         echo "MY_VAR=$(echo $VAR1)" >> $GITHUB_ENV
         echo $VAR1
         echo 'finished'
