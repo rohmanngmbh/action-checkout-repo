@@ -108,8 +108,10 @@ runs:
         deactivate
         python -m venv ~/venvs/venv3 --clear
         echo "******************* Checkout *******************"
-        echo "MY_VAR=$(echo $RANDOM)" >> $GITHUB_ENV
-        echo $MY_VAR
+        VAR1=$RANDOM)
+        echo "MY_VAR=$(echo $VAR1)" >> $GITHUB_ENV
+        echo $VAR1
+        echo 'finished'
   
     # Show ref information
     - name: Show ref information
