@@ -47,8 +47,8 @@ jobs:
         run: |
           ls -R
 
-  # Test-Local-myself
-  Test-Local-myself:
+  # Test-Local
+  Test-Local:
       # Run checkout an extern example repository to 'extern'
       - name: Checkout an extern repository
         uses: ./
