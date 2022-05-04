@@ -28,7 +28,8 @@ jobs:
       # Checksout action repository under $GITHUB_WORKSPACE
       - name: Checkout action repository
         uses: actions/checkout@v3
-        ref: ${{ github.ref }}
+        with:
+          ref: ${{ github.ref }}
 
       # Run own local checkout action
       - name: Checkout this repository
@@ -62,7 +63,8 @@ jobs:
       # Checksout action repository under $GITHUB_WORKSPACE
       - name: Checkout action repository
         uses: actions/checkout@v3
-        ref: ${{ github.ref }}
+        with:
+          ref: ${{ github.ref }}
 
       # Run checkout an extern example repository to 'extern'
       - name: Checkout an extern repository
