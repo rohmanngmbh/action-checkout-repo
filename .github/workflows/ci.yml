@@ -38,6 +38,11 @@ jobs:
           path: myself
           ref: ${{ github.ref }}
 
+      # Test
+      - name: Test
+        if: endsWith( github.ref, env.my_ref )
+        run: exit 1
+
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
@@ -223,7 +228,7 @@ jobs:
         run: |
           ls -R
 
-  # TTest-marketplace-myself
+  # Test-marketplace-myself
   Test-marketplace-myself:
     # The type of runner that the job will run on: ubuntu
     runs-on: ${{ matrix.os }}
@@ -243,7 +248,7 @@ jobs:
 
       # Test
       - name: Test
-        if:  env.my_ref != 'main'
+        if: endsWith( github.ref, env.my_ref )
         run: exit 1
 
       # List folder recursive (only for debugging)
