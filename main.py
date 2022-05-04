@@ -139,18 +139,6 @@ if __name__ == "__main__":
     parser.add_argument('--alt_ref', help='Alterntive reference branch or tag  (default: default branch)')
     args = parser.parse_args()     # all not set parameter are 'None'
 
-    # modify = False
-    # # delete variable if exist
-    # if 'GITHUB_MY_VAR' in os.environ:
-    #     modify = True
-    #     # print("delete GITHUB_MY_VAR")
-    #     # if hasattr(os, 'unsetenv'):
-    #     #     print('use unset')
-    #     #     os.unsetenv('GITHUB_MY_VAR')
-    #     # else:
-    #     #     print('use putenv')
-    #     #     os.putenv('_GITHUB_MY_VAR', '')
-
     # token management
     try:
         my_token = os.environ["INPUT_TOKEN"]
@@ -216,18 +204,10 @@ if __name__ == "__main__":
     # print information
     print("Found following return ref '{}' for repository '{}' with input ref '{}' and input alt_ref '{}'.".format(ret_ref, repo.full_name, my_ref, my_alt_ref, ))
 
-    # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
-    print(f"::set-output name=ref::{ret_ref}")
+    # # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
+    # print(f"::set-output name=ref::{ret_ref}")
 
-    # # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
-    # env_file = os.environ['GITHUB_ENV']
-    # print(env_file)
-    # # if modify:
-    # #     print('modify')
-    # #     with open(env_file, "r") as myfile:
-    # #         print(myfile.readlines())
-    # #     with open(env_file, "a") as myfile:
-    # #         myfile.write("GITHUB_MY_VAR={}".format(ret_ref))
-    # # else:
-    # with open(env_file, "a") as myfile:
-    #     myfile.write("GITHUB_MY_VAR={}".format(ret_ref))
+    # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
+    env_file = os.environ['GITHUB_ENV']
+    with open(env_file, "a") as myfile:
+        myfile.write("MY_REF={}".format(ret_ref))

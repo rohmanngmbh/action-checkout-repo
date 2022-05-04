@@ -54,16 +54,6 @@ inputs:
     required: false
     default: ""
 
-outputs:
-  ref-other:
-    description: >
-      Result reference. The alternative branch, tag or SHA to checkout
-    value: ${{ steps.pre-checkout-other.outputs.ref }}
-  ref-win:
-    description: >
-      Result reference. The alternative branch, tag or SHA to checkout
-    value: ${{ steps.pre-checkout-win.outputs.ref }}
-
 runs:
   using: "composite"
   steps:
@@ -95,8 +85,8 @@ runs:
         python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         echo "******************* Checkout *******************"
-        echo "::set-output name=MY_VARI::test1"
-        echo "MY_VAR=test2" >> $GITHUB_ENV
+        echo "MY_VAR=$(echo $RANDOM)" >> $GITHUB_ENV
+        echo $MY_VAR
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
@@ -118,24 +108,20 @@ runs:
         deactivate
         python -m venv ~/venvs/venv3 --clear
         echo "******************* Checkout *******************"
-        echo "::set-output name=MY_VARI::test3"
-        echo "MY_VAR=test4" >> $GITHUB_ENV
+        echo "MY_VAR=$(echo $RANDOM)" >> $GITHUB_ENV
+        echo $MY_VAR
   
     # Show ref information
     - name: Show ref information
       run: |
-          echo 'eins'
+          echo 'ref'
+          echo $MY_REF
+          echo 'ren-ref'
+          echo "${{ env.MY_REF }}"
+          echo 'random'
           echo $MY_VAR
-          echo 'zwei'
-          echo $MY_VARI
-          echo 'drei'
+          echo 'env-random'
           echo "${{ env.MY_VAR }}"
-          echo 'vier'
-          echo "${{ env.MY_VARI }}"
-          echo 'fuenf'
-          echo "${{ steps.pre-checkout-other.outputs.MY_VAR }}"
-          echo 'sechs'
-          echo "${{ steps.pre-checkout-other.outputs.MY_VARI }}"
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
@@ -144,7 +130,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ env.ref}}
+        ref:  ${{ env.MY_REF}}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
@@ -155,7 +141,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
-        ref:  ${{ env.ref }}
+        ref:  ${{ env.MY_REF }}
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
