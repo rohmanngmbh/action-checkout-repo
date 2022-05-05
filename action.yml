@@ -67,12 +67,28 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # Show information
+    - name: Show information
+      run: |
+          echo "repo: ${{ github.reposiory }}"
+      shell: bash
+
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout own action code
+      if: ${{ github.repository == 'rohmanngmbh/action-checkout-repo' }}
       uses: actions/checkout@v3
       with:
         repository: rohmanngmbh/action-checkout-repo
-        ref: main
+        ref: ${{ github.ref }}
+        path: .temp
+
+    # Call normal checkout action: see https://github.com/actions/checkout
+    - name: Checkout own action code
+      if: ${{ github.repository != 'rohmanngmbh/action-checkout-repo' }}
+      uses: actions/checkout@v3
+      with:
+        repository: rohmanngmbh/action-checkout-repo
+        ref: main       # <<<<< release tag or main
         path: .temp
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
