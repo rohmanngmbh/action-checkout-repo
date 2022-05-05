@@ -23,6 +23,12 @@ inputs:
       The alternative branch, tag or SHA to checkout. When checking out the repository that
       triggered a workflow, this defaults to the reference or SHA for that event. Otherwise, uses the default branch.
     required: false
+  order:
+    description: >
+      Direction of sort in case of a regular expression for your reference. ('top' or 'down')
+      Example: In case if ref=v* with tags v1, v2, v3 you will get v3 as a valid reference
+    required: false
+    default: 'top'
   token:
     description: >
       Personal access token (PAT) used to fetch the repository. The PAT is configured
@@ -76,7 +82,8 @@ runs:
         INPUT_TOKEN: ${{ inputs.token }}
         INPUT_REPOSITORY:  ${{ inputs.repository }}
         INPUT_REF: ${{ inputs.ref }}
-        INPUT_ALT_REF:  ${{ inputs.alt_ref }}
+        INPUT_ALT_REF: ${{ inputs.alt_ref }}
+        INPUT_ORDER: ${{ inputs.order }}
       shell: bash
       run: |
         cd .temp
@@ -100,6 +107,7 @@ runs:
         INPUT_REPOSITORY:  ${{ inputs.repository }}
         INPUT_REF: ${{ inputs.ref }}
         INPUT_ALT_REF:  ${{ inputs.alt_ref }}
+        INPUT_ORDER: ${{ inputs.order }}
       shell: cmd
       run: |
         echo "*************** Pre-Run Checkout ***************"

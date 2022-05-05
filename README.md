@@ -19,14 +19,14 @@ This action supports:
 - git lfs (in cached mode)
 - select a special reference
 - select a alternative reference (used when your regular reference does not exist)
-
+- select a reference with regular expression e.g like */release/*.*.* (and get the last matching)
 
 ## Examples:
 
 ## Checkout a special branch
 ```yaml
 - name: Checkout repo with a special branch
-  uses: rohmanngmbh/action-checkout-repo@v1
+  uses: rohmanngmbh/action-checkout-repo@v2
   with:
     ref: my-branch
 ```
@@ -34,7 +34,7 @@ This action supports:
 ## Checkout private repo
 ```yaml
 - name: Checkout private repo
-  uses: rohmanngmbh/action-checkout-repo@v1
+  uses: rohmanngmbh/action-checkout-repo@v2
   with:
     repository: my-org/my-private-repo
     token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
@@ -45,7 +45,7 @@ This action supports:
 ## GIT LFS repo
 ```yaml
 - name: Checkout git lfs repo
-  uses: rohmanngmbh/action-checkout-repo@v1
+  uses: rohmanngmbh/action-checkout-repo@v2
   with:
     lfs: true
 ```
@@ -56,19 +56,26 @@ If you want to use LFS use:
 
 ```yaml
 - name: Checkout repo with submodules
-  uses: rohmanngmbh/action-checkout-repo@v1
+  uses: rohmanngmbh/action-checkout-repo@v2
   with:
     submodules: recursive
 ```
 ## Checkout a special branch with fallback alternative
 ```yaml
 - name: Checkout repo with alternative ref
-  uses: rohmanngmbh/action-checkout-repo@v1
+  uses: rohmanngmbh/action-checkout-repo@v2
   with:
     ref: feature/blue-light
     alt_ref: develop
 ```
 
+## Checkout the last tag with a regular expression
+```yaml
+- name: Checkout repo with alternative ref
+  uses: rohmanngmbh/action-checkout-repo@v2
+  with:
+    ref: */release/*.*.* 
+```
 
 ### License
 
