@@ -74,6 +74,7 @@ runs:
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
+    # this is neccessary for own ci test
     - name: Checkout own action code
       if: ${{ github.repository == 'rohmanngmbh/action-checkout-repo' }}
       uses: actions/checkout@v3
@@ -88,7 +89,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository: rohmanngmbh/action-checkout-repo
-        ref: main       # <<<<< release tag or main
+        ref: v1.3.0       # <<<<< release tag or main
         path: .temp
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
