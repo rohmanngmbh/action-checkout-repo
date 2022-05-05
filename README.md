@@ -4,6 +4,8 @@ It's based on [Base Checkout Action](https://github.com/actions/checkout) and [C
 
 We added a special reference handling called "alt_ref". This feature we need in case of a multi-repo build chain in case of mirror branches. If the feature branch does not exist in your repository, the alternative reference 'alt_ref' will be taken. To handle the reference stuff we are using [PyGithub](https://github.com/PyGithub/PyGithub).
 
+You can set regular expression to checkout reference, too.
+
 Check this out on [Github Marketplace](https://github.com/marketplace/actions/checkout-repo).
 
 Hint(s):
@@ -19,7 +21,7 @@ This action supports:
 - git lfs (in cached mode)
 - select a special reference
 - select a alternative reference (used when your regular reference does not exist)
-- select a reference with regular expression e.g like */release/*.*.* (and get the last matching)
+- select a reference with regular expression e.g like \*/release/\*.\*.\* (and get the last matching)
 
 ## Examples:
 
