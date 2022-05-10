@@ -82,6 +82,7 @@ runs:
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}   
+        fetch-depth: 0
    
     # Call normal checkout action: see https://github.com/actions/checkout
     # this is neccessary for own ci test
