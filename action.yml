@@ -67,10 +67,11 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # Show information
-    - name: Show information
+    # Show debug information
+    - name: Show debug information
       run: |
-          echo "repo: ${{ github.reposiory }}"
+          echo "github repo: ${{ github.repository }}"
+          echo "input repo: ${{ inputs.repository }}"
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
