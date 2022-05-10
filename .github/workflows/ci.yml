@@ -50,7 +50,7 @@ jobs:
       - name: List folders
         run: |
           pwd
-          ls -a -R
+          ls -R
 
   # Test-local-extern
   Test-local-extern:
@@ -90,7 +90,7 @@ jobs:
       - name: List folders
         run: |
           pwd
-          ls -a -R
+          ls -R
 
   # Test-local-lfs
   Test-local-lfs:
@@ -130,7 +130,7 @@ jobs:
       - name: List folders
         run: |
           pwd
-          ls -a -R
+          ls -R
 
   # Test-local-myself-branch-not-exist
   Test-local-myself-branch-not-exist:
@@ -168,7 +168,7 @@ jobs:
       - name: List folders
         run: |
           pwd
-          ls -a -R
+          ls -R
 
   # Test-local-myself-branch-alt-ref
   Test-local-myself-branch-alt-ref:
@@ -207,7 +207,7 @@ jobs:
       - name: List folders
         run: |
           pwd
-          ls -a -R
+          ls -R
 
   # Test-local-myself-branch-alt-ref-tag
   Test-local-myself-branch-alt-ref-tag:
@@ -246,7 +246,7 @@ jobs:
       - name: List folders
         run: |
           pwd
-          ls -a -R
+          ls -R
 
   # Test-local-myself-regex-tag
   Test-local-myself-regex-tag:
@@ -270,7 +270,7 @@ jobs:
       - name: Checkout this repository at alternative reference (tag)
         uses: ./
         with:
-          path: -myself-regex-tag
+          path: myself-regex-tag
           ref: v*
           order: down
 
@@ -285,7 +285,7 @@ jobs:
       - name: List folders
         run: |
           pwd
-          ls -a -R
+          ls -R
 
   # Test-marketplace-myself
   Test-marketplace-myself:
@@ -317,7 +317,7 @@ jobs:
       - name: List folders
         run: |
           pwd
-          ls -a -R
+          ls -R
 
   # Test-marketplace-without-path
   Test-marketplace-without-path:
@@ -350,4 +350,4 @@ jobs:
       - name: List folders
         run: |
           pwd
-          ls -a -R
+          ls -R
