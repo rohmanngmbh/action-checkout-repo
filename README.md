@@ -12,6 +12,7 @@ Hint(s):
 - Actual you use only for once the action due to [this](https://github.community/t/sharing-environment-variables-between-steps-in-an-action-yml-wrong-value-in-case-of-mulitply-call/248736) bug. 
 - Windows did not use an own virtual environment (python)
 - This works only for GitHub Repos
+- local files will be checked out to folder `.temp`
 
 ## Options
 

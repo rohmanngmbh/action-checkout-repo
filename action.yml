@@ -118,14 +118,14 @@ runs:
         pip3 install virtualenv
         python3 -m venv ~/venvs/venv3
         source ~/venvs/venv3/bin/activate
-        echo "*************** Pre-Run Checkout ***************"
+        echo "*************** Post-Run Checkout ***************"
         pip3 install -r requirements.txt
         python3 main.py
         deactivate
         python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         cd ..
-        echo "******************* Checkout *******************"
+        echo "*************** Change Reference "***************
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
@@ -138,12 +138,12 @@ runs:
         INPUT_ORDER: ${{ inputs.order }}
       shell: cmd
       run: |
-        echo "*************** Pre-Run Checkout ***************"
+        echo "*************** Post-Run Checkout ***************"
         cd .temp
         pip install -r requirements.txt
         python main.py
         cd ..
-        echo "******************* Checkout *******************"
+        echo "*************** Change Reference "***************
   
     # Show ref information
     - name: Show ref information
