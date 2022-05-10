@@ -152,7 +152,16 @@ runs:
 
     # Change reference of cloned repo
     - name: Change reference
+      if: ${{ inputs.path == '' }}
       run: git checkout ${{ env.my_ref}}
+      shell: bash
+
+    # Change reference of cloned repo
+    - name: Change reference
+      if: ${{ inputs.path != '' }}
+      run: |
+        cd ${{ inputs.path }}
+        git checkout ${{ env.my_ref}}
       shell: bash
 
     # Handle git lfs stuff: see https://github.com/nschloe/action-cached-lfs-checkout
