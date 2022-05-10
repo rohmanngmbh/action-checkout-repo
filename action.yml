@@ -102,7 +102,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository: rohmanngmbh/action-checkout-repo
-        ref: v1.3.0       # <<<<< release tag or main
+        ref: v1.3.1       # <<<<< release tag or main
         path: .temp
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
