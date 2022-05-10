@@ -74,6 +74,16 @@ runs:
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        repository:  ${{ inputs.repository }}
+        ref:  ${{ env.my_ref }}
+        token: ${{ inputs.token }}
+        path: ${{ inputs.path }}
+        lfs: ${{ inputs.lfs }}   
+   
+    # Call normal checkout action: see https://github.com/actions/checkout
     # this is neccessary for own ci test
     - name: Checkout own action code
       if: ${{ github.repository == 'rohmanngmbh/action-checkout-repo' }}
@@ -140,26 +150,10 @@ runs:
           echo "my_ref: ${{ env.my_ref }}"
       shell: bash
 
-    # Call normal checkout action: see https://github.com/actions/checkout
-    - name: Checkout code
-      if: ${{ inputs.path == '' }}
-      uses: actions/checkout@v3
-      with:
-        repository:  ${{ inputs.repository }}
-        ref:  ${{ env.my_ref}}
-        token: ${{ inputs.token }}
-        lfs: ${{ inputs.lfs }}
-
-    # Call normal checkout action: see https://github.com/actions/checkout
-    - name: Checkout code
-      if: ${{ inputs.path != '' }}
-      uses: actions/checkout@v3
-      with:
-        repository:  ${{ inputs.repository }}
-        ref:  ${{ env.my_ref }}
-        token: ${{ inputs.token }}
-        path: ${{ inputs.path }}
-        lfs: ${{ inputs.lfs }}
+    # Change reference of cloned repo
+    - name: Change reference
+      run: git checkout ${{ env.my_ref}}
+      shell: bash
 
     # Handle git lfs stuff: see https://github.com/nschloe/action-cached-lfs-checkout
     # in case of base path
