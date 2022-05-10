@@ -142,18 +142,17 @@ runs:
 
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
-      if: ${{ runner.os != 'Windows' }}
+      if: ${{ inputs.path == '' }}
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
         ref:  ${{ env.my_ref}}
         token: ${{ inputs.token }}
-        path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}
 
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout code
-      if: ${{ runner.os == 'Windows' }}
+      if: ${{ inputs.path != '' }}
       uses: actions/checkout@v3
       with:
         repository:  ${{ inputs.repository }}
