@@ -83,6 +83,7 @@ runs:
         token: ${{ inputs.token }}
         path: ${{ inputs.path }}
         lfs: ${{ inputs.lfs }}   
+        submodules:  ${{ inputs.submodules }}   
         fetch-depth: 0
    
     # Call normal checkout action: see https://github.com/actions/checkout
