@@ -49,6 +49,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
+          pwd
           ls -a -R
 
   # Test-local-extern
@@ -88,6 +89,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
+          pwd
           ls -a -R
 
   # Test-local-lfs
@@ -127,6 +129,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
+          pwd
           ls -a -R
 
   # Test-local-myself-branch-not-exist
@@ -164,6 +167,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
+          pwd
           ls -a -R
 
   # Test-local-myself-branch-alt-ref
@@ -202,6 +206,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
+          pwd
           ls -a -R
 
   # Test-local-myself-branch-alt-ref-tag
@@ -240,6 +245,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
+          pwd
           ls -a -R
 
   # Test-local-myself-regex-tag
@@ -278,6 +284,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
+          pwd
           ls -a -R
 
   # Test-marketplace-myself
@@ -309,6 +316,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
+          pwd
           ls -a -R
 
   # Test-marketplace-without-path
@@ -341,4 +349,5 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
+          pwd
           ls -a -R
