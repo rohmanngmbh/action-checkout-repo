@@ -49,45 +49,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
-          ls -alR
-
-  # Test-local-extern-without-folder
-  Test-local-extern-without-folder:
-    # The type of runner that the job will run on: ubuntu
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
-      fail-fast: false
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-    
-      # Checksout action repository under $GITHUB_WORKSPACE
-      - name: Checkout action repository
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
-
-      # Run extern repository checkout using local action
-      - name: Checkout an extern repository
-        uses: ./
-        with:
-          repository: githubtraining/community-contributors
-          ref: main
-
-      # Test
-      - name: Test
-        if:  ${{ env.my_ref != 'main' }}
-        run: |
-          echo ${{ env.my_ref }}
-          echo ${{ github.ref }}
-          exit 1
-
-      # List folder recursive (only for debugging)
-      - name: List folders
-        run: |
-          ls -alR
+          ls -a -R
 
   # Test-local-extern
   Test-local-extern:
@@ -126,7 +88,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
-          ls -alR
+          ls -a -R
 
   # Test-local-lfs
   Test-local-lfs:
@@ -165,7 +127,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
-          ls -alR
+          ls -a -R
 
   # Test-local-myself-branch-not-exist
   Test-local-myself-branch-not-exist:
@@ -202,7 +164,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
-          ls -alR
+          ls -a -R
 
   # Test-local-myself-branch-alt-ref
   Test-local-myself-branch-alt-ref:
@@ -240,7 +202,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
-          ls -alR
+          ls -a -R
 
   # Test-local-myself-branch-alt-ref-tag
   Test-local-myself-branch-alt-ref-tag:
@@ -278,7 +240,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
-          ls -alR
+          ls -a -R
 
   # Test-local-myself-regex-tag
   Test-local-myself-regex-tag:
@@ -316,7 +278,7 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
-          ls -alR
+          ls -a -R
 
   # Test-marketplace-myself
   Test-marketplace-myself:
@@ -347,4 +309,36 @@ jobs:
       # List folder recursive (only for debugging)
       - name: List folders
         run: |
-          ls -alR
+          ls -a -R
+
+  # Test-marketplace-without-path
+  Test-marketplace-without-path:
+    # The type of runner that the job will run on: ubuntu
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+      fail-fast: false
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
+      # Run extern repository checkout with action (last main)
+      - name: Checkout this repository with own action (last main)
+        uses: rohmanngmbh/action-checkout-repo@main
+        with:
+          repository: githubtraining/community-contributors
+          ref: main
+
+      # Test
+      - name: Test
+        if:  ${{ env.my_ref != 'main' }}
+        run: |
+          echo ${{ env.my_ref }}
+          echo ${{ github.ref }}
+          exit 1
+
+      # List folder recursive (only for debugging)
+      - name: List folders
+        run: |
+          ls -a -R
