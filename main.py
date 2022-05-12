@@ -327,7 +327,7 @@ if __name__ == "__main__":
         print("No set of environment variable possible. Is this a local run?")
     else:
         with open(env_file, "a") as myfile:
-            myfile.write("my_ref={} ".format(ret_ref))
+            myfile.write("my_ref={}\n".format(ret_ref))
             if is_default_branch:
                 myfile.write("is_default_branch=true")
             else:
