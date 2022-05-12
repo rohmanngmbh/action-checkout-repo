@@ -166,6 +166,7 @@ runs:
       if: ${{ inputs.path != '' }}
       run: |
         cd ${{ inputs.path }}
+        git fetch
         git checkout ${{ env.my_ref}}
       shell: bash
 
