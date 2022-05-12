@@ -156,7 +156,9 @@ runs:
     # Switch reference of cloned repo
     - name: Switch reference of cloned repo
       if: ${{ inputs.path == '' }}
-      run: git checkout ${{ env.my_ref}}
+      run: |
+        git fetch
+        git checkout ${{ env.my_ref}}
       shell: bash
 
     # Switch reference of cloned repo
