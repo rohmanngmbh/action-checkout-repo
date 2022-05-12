@@ -321,12 +321,13 @@ if __name__ == "__main__":
     # print(f"::set-output name=ref::{ret_ref}")
 
     # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
+    # and https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
     env_file = os.getenv('GITHUB_ENV')
     if env_file == None:
         print("No set of environment variable possible. Is this a local run?")
     else:
         with open(env_file, "a") as myfile:
-            myfile.write("my_ref={}".format(ret_ref))
+            myfile.write("my_ref={} ".format(ret_ref))
             if is_default_branch:
                 myfile.write("is_default_branch=true")
             else:
