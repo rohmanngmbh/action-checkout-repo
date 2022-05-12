@@ -157,14 +157,14 @@ runs:
 
     # Switch reference of cloned repo
     - name: Switch reference of cloned repo
-      if: ${{ inputs.path == '' }}
+      if: ${{ inputs.path == '' && env.is_default_branch == 'false' }}
       run: |
         git checkout --track origin/${{ env.my_ref}}
       shell: bash
 
     # Switch reference of cloned repo
     - name: Switch reference of cloned repo
-      if: ${{ inputs.path != '' }}
+      if: ${{ inputs.path != '' && env.is_default_branch == 'false'}}
       run: |
         cd ${{ inputs.path }}
         git checkout --track origin/${{ env.my_ref}}

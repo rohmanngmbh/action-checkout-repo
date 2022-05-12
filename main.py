@@ -308,6 +308,12 @@ if __name__ == "__main__":
     # convert ref name
     ret_ref = _convert_ref_name(local_ref)
 
+    # check if branch is default branch
+    if repo.default_branch == ret_ref:
+        is_default_branch = True
+    else:
+        is_default_branch = False
+
     # print information
     print("Found following return ref '{}' for repository '{}' with input ref '{}' and input alt_ref '{}'.".format(ret_ref, repo.full_name, my_ref, my_alt_ref))
 
@@ -321,3 +327,7 @@ if __name__ == "__main__":
     else:
         with open(env_file, "a") as myfile:
             myfile.write("my_ref={}".format(ret_ref))
+            if is_default_branch:
+                myfile.write("is_default_branch=true")
+            else:
+                myfile.write("is_default_branch=false")
