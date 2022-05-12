@@ -153,21 +153,38 @@ runs:
           echo "input_ref: ${{ inputs.ref }}"
           echo "input_alt_ref: ${{ inputs.alt_ref }}"
           echo "my_ref: ${{ env.my_ref }}"
+          echo "is_default_branch: ${{ env.is_default_branch }"
+          echo "ref_type: ${{ env.ref_type }"
       shell: bash
 
     # Switch reference of cloned repo
     - name: Switch reference of cloned repo
-      if: ${{ inputs.path == '' && env.is_default_branch == 'false' }}
+      if: ${{ inputs.path == '' && env.is_default_branch == 'false' &&  env.ref_type == 'branch' }}
       run: |
         git checkout --track origin/${{ env.my_ref}}
       shell: bash
 
     # Switch reference of cloned repo
     - name: Switch reference of cloned repo
-      if: ${{ inputs.path != '' && env.is_default_branch == 'false'}}
+      if: ${{ inputs.path != '' && env.is_default_branch == 'false' &&  env.ref_type == 'branch'}}
       run: |
         cd ${{ inputs.path }}
         git checkout --track origin/${{ env.my_ref}}
+      shell: bash
+
+    # Switch reference of cloned repo
+    - name: Switch reference of cloned repo
+      if: ${{ inputs.path == '' && env.is_default_branch == 'false' &&  env.ref_type == 'tag'}}
+      run: |
+        git checkout tags/${{ env.my_ref}}
+      shell: bash
+
+    # Switch reference of cloned repo
+    - name: Switch reference of cloned repo
+      if: ${{ inputs.path != '' && env.is_default_branch == 'false' &&  env.ref_type == 'tag'}}
+      run: |
+        cd ${{ inputs.path }}
+        git checkout tags/${{ env.my_ref}}
       shell: bash
 
     # Handle git lfs stuff: see https://github.com/nschloe/action-cached-lfs-checkout

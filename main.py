@@ -306,7 +306,7 @@ if __name__ == "__main__":
                     local_ref = repo.default_branch
 
     # convert ref name
-    ret_ref = _convert_ref_name(local_ref)
+    ret_ref, ret_type = _convert_ref_name(local_ref, return_type=True)
 
     # check if branch is default branch
     if repo.default_branch == ret_ref:
@@ -327,8 +327,12 @@ if __name__ == "__main__":
         print("No set of environment variable possible. Is this a local run?")
     else:
         with open(env_file, "a") as myfile:
+            # add ref name
             myfile.write("my_ref={}\n".format(ret_ref))
+            # add is default branch true or not
             if is_default_branch:
                 myfile.write("is_default_branch=true")
             else:
-                myfile.write("is_default_branch=false")
+                myfile.write("is_default_branch=false\n")
+            # add ref type: branch or tag
+            myfile.write("ref_type={}".format(ret_type))
