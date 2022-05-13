@@ -187,6 +187,21 @@ runs:
         git checkout ${{env.my_ref}}
       shell: bash
 
+    # Get sha
+    - name: Get sha
+      if: ${{ inputs.path == '' }}
+      run: |
+        git rev-parse HEAD
+      shell: bash
+
+    # Get sha
+    - name: Get sha
+      if: ${{ inputs.path != '' }}
+      run: |
+        cd ${{ inputs.path }}
+        git rev-parse HEAD
+      shell: bash
+
     # Handle git lfs stuff: see https://github.com/nschloe/action-cached-lfs-checkout
     # in case of base path
     - name: Create LFS file list
