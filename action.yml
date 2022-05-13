@@ -75,7 +75,7 @@ runs:
       shell: bash
 
     # Call normal checkout action: see https://github.com/actions/checkout
-    # use default branch
+    # use default branch (or the reference)
     - name: Checkout code
       uses: actions/checkout@v3
       with:
@@ -102,7 +102,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository: rohmanngmbh/action-checkout-repo
-        ref: v1.3.2       # <<<<< release tag or main
+        ref: main       # <<<<< release tag or main
         path: .temp
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
@@ -161,7 +161,7 @@ runs:
     - name: Switch reference of cloned repo
       if: ${{ inputs.path == '' && env.is_default_branch == 'false' &&  env.ref_type == 'branch' }}
       run: |
-        git checkout --track origin/${{ env.my_ref}}
+        git checkout ${{env.my_ref}}
       shell: bash
 
     # Switch reference of cloned repo
@@ -169,7 +169,7 @@ runs:
       if: ${{ inputs.path != '' && env.is_default_branch == 'false' &&  env.ref_type == 'branch'}}
       run: |
         cd ${{ inputs.path }}
-        git checkout --track origin/${{ env.my_ref}}
+        git checkout ${{env.my_ref}}
       shell: bash
 
     # Switch reference of cloned repo
