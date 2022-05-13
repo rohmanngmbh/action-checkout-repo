@@ -331,7 +331,7 @@ if __name__ == "__main__":
             myfile.write("my_ref={}\n".format(ret_ref))
             # add is default branch true or not
             if is_default_branch:
-                myfile.write("is_default_branch=true")
+                myfile.write("is_default_branch=true\n")
             else:
                 myfile.write("is_default_branch=false\n")
             # add ref type: branch or tag
