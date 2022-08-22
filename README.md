@@ -22,7 +22,7 @@ This action supports:
 - git lfs (in cached mode)
 - select a special reference
 - select a alternative reference (used when your regular reference does not exist)
-- select a reference with regular expression e.g like \*/release/\*.\*.\* (and get the last matching)
+- select a reference with regular expression e.g like \*/release/\*.\*.\* (and get the last matching, in case of downgrade you get the )
 
 ## Examples:
 
@@ -78,6 +78,15 @@ If you want to use LFS use:
   uses: rohmanngmbh/action-checkout-repo@v1.3.2
   with:
     ref: */release/*.*.* 
+```
+
+## Checkout the last tag with a regular expression and not matching to default branch
+```yaml
+- name: Checkout repo with alternative ref
+  uses: rohmanngmbh/action-checkout-repo@v1.3.2
+  with:
+    ref: */release/*.*.* 
+    regex_next_to_last: true
 ```
 
 ### License

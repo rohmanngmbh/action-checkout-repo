@@ -4,6 +4,29 @@ import re
 import argparse
 from github import Github
 
+def convert_bool(in_value, dominant=None):
+    ''' convert bool
+    
+    with option to set a dominant value:
+        - None: in case of in_value does not match with bool values, we will be raise an exception
+        - False: in case of in_value does not match with bool values, the return value will be set to true
+        - True: in case of in_value does not match with bool values, the return value will be set to true
+
+    '''
+    if in_value == 'true' or in_value == 'True' or in_value == 'TRUE' or in_value == True:
+        out_value = True
+    elif in_value == 'false' or in_value == 'False' or in_value == 'FALSE' or in_value == False:
+        out_value = False
+    # in_value does not match with bool value
+    else:
+        if dominant == True:
+            out_value = True
+        elif dominant == False:
+            out_value = False
+        else:  
+            raise Exception("Unknown input at bool value '{}'. (Expected values: 'true', 'TRUE', 'True', 'false', ...)".format(in_value))
+    return out_value
+
 def _convert_ref_name(ref_name:str, return_type:bool=False):
     ''' convert ref name if necessary
 
@@ -240,7 +263,7 @@ def check_if_ref_exist(repo, ref_name, ref_names=None) -> bool:
         else:
             return False
 
-def handle_ref_regex(repo, search_pattern, ref_names=None, sort_order='top'):
+def handle_ref_regex(repo, search_pattern, ref_names=None, sort_order='top', next_to_last=False):
     ''' return None if not matched
     if regex sha is same to the current default head, take the last one
     '''
@@ -286,14 +309,16 @@ def handle_ref_regex(repo, search_pattern, ref_names=None, sort_order='top'):
             found_ref = regex_selection[0]
             # check if found_ref matches with current default
             if get_git_ref_sha(repo) == get_git_ref_sha(repo, found_ref):
-                # print message
-                print("Found ref '{}' matches with current default: sha = '{}'.".format(found_ref, get_git_ref_sha(repo)))
-                if len(regex_selection) == 1:
-                    # explain selection
-                    print("No other regex value is possitble!")
-                else:
-                    # select the second
-                    found_ref = regex_selection[1]
+                # in case to next to last flag is true
+                if next_to_last:
+                    # print message
+                    print("Found ref '{}' matches with current default: sha = '{}'.".format(found_ref, get_git_ref_sha(repo)))
+                    if len(regex_selection) == 1:
+                        # explain selection
+                        print("No other regex value is possibile!")
+                    else:
+                        # select the second
+                        found_ref = regex_selection[1]
             print("Filterd by sorting found reference name '{}' for searching reference '{}'!".format(found_ref, search_pattern))
             return found_ref
 
@@ -321,6 +346,7 @@ if __name__ == "__main__":
     parser.add_argument('--ref', help='Reference branch or tag (default: default branch)')
     parser.add_argument('--alt_ref', help='Alterntive reference branch or tag  (default: default branch)')
     parser.add_argument('--order', help='Direction of sort in case of a regular expression for your reference. (top or down, default: top)')
+    parser.add_argument('--regex_next_to_last', help='In case of a regular expression matches your selected sha with the head of your default branch: here you can select the behavior. (true or false, default: false')
     args = parser.parse_args()     # all not set parameter are 'None'
 
     # token management
@@ -377,6 +403,18 @@ if __name__ == "__main__":
         else:
             my_order = args.order
 
+    # regex_next_to_last management
+    try:
+        my_regex_next_to_last = os.environ["INPUT_REGEX_NEXT_TO_LAST"]
+    except:
+        # if no order is set: take top
+        if args.order is None:
+            my_regex_next_to_last = 'false'
+        # take input from args
+        else:
+            my_regex_next_to_last = args.regex_next_to_last
+    my_regex_next_to_last = convert_bool(my_regex_next_to_last)
+
     # start pygithub session
     g = Github(my_token)
     # get repo
@@ -401,12 +439,12 @@ if __name__ == "__main__":
     
     # if my_ref is regex
     if ref_regex_flag:
-        local_ref = handle_ref_regex(repo, my_ref, ref_names=ref_names, sort_order=my_order)
+        local_ref = handle_ref_regex(repo, my_ref, ref_names=ref_names, sort_order=my_order, next_to_last=my_regex_next_to_last)
         # if regex does not exist:
         if local_ref == None:
             # if my_alt_ref is regex
             if alt_ref_regex_flag:
-                local_ref = handle_ref_regex(repo, my_alt_ref, ref_names=ref_names, sort_order=my_order)
+                local_ref = handle_ref_regex(repo, my_alt_ref, ref_names=ref_names, sort_order=my_order, next_to_last=my_regex_next_to_last)
                 # if regex does not exist:
                 if local_ref == None:
                     # take default ref if alt ref does not exist

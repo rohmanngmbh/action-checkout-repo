@@ -47,6 +47,13 @@ inputs:
     description: 'Whether to download Git-LFS files'
     required: false
     default: 'false'
+  regex_next_to_last:
+    description: >
+      In case of a regular expression matches your selected sha with the head of your default branch: here you can select the behavior.
+      Is the value false (default) the found sha will be taken. Is the value true, the last matching regex before the matching sha will be taken.
+      Example: In case if ref=v* with tags v1, v2, v3 you will get v3 as a valid reference. Is the v3 on the same sha with your main (default branch) and this flag is true. We will switch to v2 (next to last).
+    required: false
+    default: 'false'
   submodules:
     description: >
       Whether to checkout submodules: `true` to checkout submodules or `recursive` to
