@@ -1,3 +1,4 @@
+from logging import exception
 import os
 import re
 import argparse
@@ -42,6 +43,130 @@ def _convert_ref_name(ref_name:str, return_type:bool=False):
                 return ref_name, 'unknown'
             else:
                 return ref_name
+
+def list_branch_names(repo) -> list:
+    ''' List all branch names of a repository
+
+    Parameter:
+        repo: Repository with type 'Github.get_repo()' or as str.
+
+    Example: 
+        >>> mngt.list_branch_names(repo)
+        ['develop', 'main', 'test/feature_blue']
+    '''
+
+    # init return
+    ret = []
+    # get refs of repo
+    refs = repo.get_git_refs()
+    # create list
+    for ref in refs:
+        if ref.ref.find('refs/heads/') != -1:
+            branch_name = ref.ref.split('refs/heads/')
+            ret.append(branch_name[1])
+    return ret
+
+def list_tag_names(repo) -> list:
+    ''' List all tag names of a repository
+
+    Parameter:
+        repo: Repository with type 'Github.get_repo()' or as str.
+
+    Example: 
+        >>> mngt.list_tag_names(repo)
+        ['example-tag']
+
+    '''
+    # init return
+    ret = []
+    # get refs of repo
+    refs = repo.get_git_refs()
+    # create list
+    for ref in refs:
+        if ref.ref.find('refs/tags/') != -1:
+            tag_name = ref.ref.split('refs/tags/')
+            ret.append(tag_name[1])
+    return ret
+
+def check_if_tag_exist(repo, tag_name) -> bool:
+    ''' Check if tag exists
+    '''
+    # handle if no branch name is set
+    if tag_name == None or tag_name == '':
+        return False
+    else:
+
+        # get list of tags in your repo
+        tag_names = list_tag_names(repo)
+        # tag name in list: return True
+        if tag_name in tag_names:
+            return True
+        else:
+            return False
+
+def check_if_branch_exist(repo, branch_name) -> bool:
+    ''' Check if branch exists
+    '''
+    # handle if no branch name is set
+    if branch_name == None or branch_name == '':
+        return False
+    else:
+        # get list of branches in your repo
+        branch_names = list_branch_names(repo)
+        # branch name in list: return True
+        if branch_name in branch_names:
+            return True
+        else:
+            return False
+
+def _get_git_ref(repo, ref_name:str):
+    '''
+    Parameter:
+        repo: Repository with type 'Github.get_repo()' or as str.
+        ref_name: Branch name like 'main' or 'develop'. Or tag name like 'v0.1.0'.
+    '''
+
+    # convert ref name if necessary
+    ref_name = _convert_ref_name(ref_name)
+
+    if check_if_branch_exist(repo, ref_name):
+        ref = repo.get_git_ref('heads/'+ref_name)
+        return ref
+    elif check_if_tag_exist(repo, ref_name):
+        ref = repo.get_git_ref('tags/'+ref_name)
+        return ref
+    else:
+        print("ERROR: Your ref '{}' does not exist in reposiory '{}'".format(repo.name, ref_name))
+        return None
+
+def get_git_ref_sha(repo, ref_name=None) -> str:
+    ''' get sha of ref of a repository
+    
+    Parameter:
+        repo: Repository with type 'Github.get_repo()' or as str.
+        ref_name: Branch name like 'main' or 'develop'. Or tag name like 'v0.1.0'. If None, default branch will be taken.
+    '''
+    # take default name if none ref set
+    if ref_name == None or ref_name == '':
+        print("WARNING: Repo '{}' has no ref {}. Default-branch '{}' will be taken.".format(repo.name, ref_name, repo.default_branch))
+        ref_name = repo.default_branch
+
+    ref = _get_git_ref(repo, ref_name)
+    if ref == None:
+        return None
+    else:
+        # in case of a commit pointer
+        if ref.raw_data['object']['type'] == 'commit':
+            return ref.raw_data['object']['sha']
+        else:
+            # in case of a lightweight tag
+            sha = ref.raw_data['object']['sha']
+            tag = repo.get_git_tag(sha)
+            if tag.raw_data['object']['type'] == 'commit':
+                return tag.raw_data['object']['sha']
+            else:
+                print("ERROR: Something went wrong with your ref '{}' at the repository '{}'.".format(ref_name, repo.name))
+                return None
 
 def list_ref_names(repo, filter=[]) -> list:
     ''' List all ref names of a repository
@@ -116,7 +241,9 @@ def check_if_ref_exist(repo, ref_name, ref_names=None) -> bool:
             return False
 
 def handle_ref_regex(repo, search_pattern, ref_names=None, sort_order='top'):
-    ''' return None if not matched '''
+    ''' return None if not matched
+    if regex sha is same to the current default head, take the last one
+    '''
     # handle input
     if sort_order not in ['top', 'down']:
         raise Exception("Please select for sort_order variable '{}' an allowed value '{}'.".format(sort_order, ['top', 'down']))
@@ -157,6 +284,16 @@ def handle_ref_regex(repo, search_pattern, ref_names=None, sort_order='top'):
             print("Found matched values {}".format(regex_selection))
             # select the first
             found_ref = regex_selection[0]
+            # check if found_ref matches with current default
+            if get_git_ref_sha(repo) == get_git_ref_sha(repo, found_ref):
+                # print message
+                print("Found ref '{}' matches with current default: sha = '{}'.".format(found_ref, get_git_ref_sha(repo)))
+                if len(regex_selection) == 1:
+                    # explain selection
+                    print("No other regex value is possitble!")
+                else:
+                    # select the second
+                    found_ref = regex_selection[1]
             print("Filterd by sorting found reference name '{}' for searching reference '{}'!".format(found_ref, search_pattern))
             return found_ref
 
