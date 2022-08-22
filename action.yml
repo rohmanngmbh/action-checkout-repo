@@ -127,7 +127,7 @@ runs:
         python3 -m venv ~/venvs/venv3 --clear
         rm -rf ~/venvs/venv3
         cd ..
-        echo "*************** Change Reference "***************
+        echo "*************** Start Checkout ***************"
 
     # Run python (environment variables has to be set separately https://github.com/actions/runner/issues/665)
     - name: Run handle reference on windows
@@ -145,7 +145,7 @@ runs:
         pip install -r requirements.txt
         python main.py
         cd ..
-        echo "*************** Change Reference "***************
+        echo "*************** Start Checkout ***************"
   
     # Show ref information
     - name: Show ref information
