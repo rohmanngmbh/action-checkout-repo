@@ -492,11 +492,9 @@ if __name__ == "__main__":
     # print information
     print("Found following return ref '{}' for repository '{}' with input ref '{}' and input alt_ref '{}'.".format(ret_ref, repo.full_name, my_ref, my_alt_ref))
 
-    # set output param: see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
-    # print(f"::set-output name=ref::{ret_ref}")
-
     # set output param: see https://stackoverflow.com/questions/70123328/how-to-set-environment-variables-in-github-actions-using-python
     # and https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
+    # and avery new: https://github.com/orgs/community/discussions/28146
     env_file = os.getenv('GITHUB_ENV')
     if env_file == None:
         print("No set of environment variable possible. Is this a local run?")
