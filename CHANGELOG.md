@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.3.4] - 2023-03-01
+
 ### Changed
 - optimize debug print(s)
 
