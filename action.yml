@@ -125,6 +125,11 @@ runs:
       run: |
         cd .temp
         pip3 install virtualenv
+        echo $RUSTUP_HOME
+        echo $PATH
+        export PATH="/home/rohbot/.cargo/bin:$PATH"
+        export PATH="/opt/rust/bin:$PATH"
+        export RUSTUP_HOME="/opt/rust"
         python3 -m venv ~/venvs/venv3
         source ~/venvs/venv3/bin/activate
         echo "*************** Post-Run Checkout ***************"
