@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -58,7 +58,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -98,7 +98,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -138,7 +138,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -176,7 +176,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -215,7 +215,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -254,7 +254,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, ubuntu-20.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -293,7 +293,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -325,7 +325,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, ubuntu-18.04, windows-latest, windows-2019, macos-12, macos-11, macos-10.15 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
