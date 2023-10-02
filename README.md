@@ -103,7 +103,6 @@ If you want to use LFS use:
     lfs: true
     ref: project/release/*
     regex_next_to_last: true
-
 ```
 
 
