@@ -9,7 +9,6 @@ You can set regular expression to checkout reference, too.
 Check this out on [Github Marketplace](https://github.com/marketplace/actions/checkout-repo).
 
 Hint(s):
-- Actual you use only for once the action due to [this](https://github.community/t/sharing-environment-variables-between-steps-in-an-action-yml-wrong-value-in-case-of-mulitply-call/248736) bug. 
 - Windows did not use an own virtual environment (python)
 - This works only for GitHub Repos
 - local files will be checked out to folder `.temp`
@@ -42,8 +41,6 @@ This action supports:
     repository: my-org/my-private-repo
     token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
     path: my-repo
-```
-> - ${{ github.token }} is scoped to the current repository, so if you want to checkout a different repository that is private you will need to provide your own PAT (personal access token). See [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) more details.
 
 ## GIT LFS repo
 ```yaml
@@ -63,6 +60,7 @@ If you want to use LFS use:
   with:
     submodules: recursive
 ```
+
 ## Checkout a special branch with fallback alternative
 ```yaml
 - name: Checkout repo with alternative ref
@@ -88,6 +86,26 @@ If you want to use LFS use:
     ref: */release/*.*.* 
     regex_next_to_last: true
 ```
+
+# Checkout one repository with different 'states' to check up and downgrade mechanism 
+```yaml
+- name: Checkout to update folder
+  uses: rohmanngmbh/action-checkout-repo@main
+  with:
+    path: update
+    lfs: true
+    ref: ${{ github.ref }}
+
+- name: Checkout to downgrade folder
+  uses: rohmanngmbh/action-checkout-repo@main
+  with:
+    path: downgrade
+    lfs: true
+    ref: project/release/*
+    regex_next_to_last: true
+
+```
+
 
 ### License
 
