@@ -133,6 +133,7 @@ runs:
         python3 -m venv ~/venvs/venv3
         source ~/venvs/venv3/bin/activate
         echo "*************** Post-Run Checkout ***************"
+        python3 -m pip install -–upgrade pip
         pip3 install -r requirements.txt
         python3 main.py
         deactivate
