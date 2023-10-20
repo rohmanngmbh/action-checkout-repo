@@ -124,6 +124,8 @@ runs:
       shell: bash
       run: |
         cd .temp
+        pip3 -V
+        pip3 list
         pip3 install --break-system-packages virtualenv
         echo $RUSTUP_HOME
         echo $PATH
