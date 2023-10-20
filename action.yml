@@ -124,7 +124,7 @@ runs:
       shell: bash
       run: |
         cd .temp
-        pip3 install virtualenv
+        pip3 install virtualenv --break-system-packages
         echo $RUSTUP_HOME
         echo $PATH
         export PATH="/home/rohbot/.cargo/bin:$PATH"
