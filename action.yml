@@ -84,7 +84,7 @@ runs:
     # Call normal checkout action: see https://github.com/actions/checkout
     # use default branch (or the reference)
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository:  ${{ inputs.repository }}
         token: ${{ inputs.token }}
@@ -97,7 +97,7 @@ runs:
     # this is neccessary for own ci test
     - name: Checkout own action code
       if: ${{ github.repository == 'rohmanngmbh/action-checkout-repo' }}
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: rohmanngmbh/action-checkout-repo
         ref: ${{ github.ref }}
@@ -106,7 +106,7 @@ runs:
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout own action code
       if: ${{ github.repository != 'rohmanngmbh/action-checkout-repo' }}
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: rohmanngmbh/action-checkout-repo
         ref: main       # <<<<< release tag or main
@@ -210,7 +210,7 @@ runs:
 
     - name: Restore LFS cache
       if: ${{ inputs.lfs == 'true' &&  inputs.path == '' }}
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       id: lfs-cache-base
       with:
         path: .git/lfs
@@ -231,7 +231,7 @@ runs:
 
     - name: Restore LFS cache
       if: ${{ inputs.lfs == 'true' &&  inputs.path != '' }}
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       id: lfs-cache-special
       with:
         path: ${{ inputs.path }}/.git/lfs
