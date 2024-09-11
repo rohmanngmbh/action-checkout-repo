@@ -4,13 +4,7 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
-updates:
-  # Maintain dependencies for submodules
-  - package-ecosystem: "gitsubmodule" 
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "weekly"
-      
+updates:      
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/" # Location of package manifests
