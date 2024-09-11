@@ -8,10 +8,10 @@ You can set regular expression to checkout reference, too.
 
 Check this out on [Github Marketplace](https://github.com/marketplace/actions/checkout-repo).
 
-Hint(s):
-- Windows did not use an own virtual environment (python)
-- This works only for GitHub Repos
-- local files will be checked out to folder `.temp`
+> [!Note]
+> - Windows did not use an own virtual environment (python)
+> - This works only for GitHub Repos
+> - local files will be checked out to folder `.temp`
 
 ## Options
 
