@@ -115,6 +115,45 @@ jobs:
         uses: ./
         with:
           repository: OpeningDesign/LFS-template
+          ref: main
+          lfs: true
+
+      # Test
+      - name: Test
+        if:  ${{ env.my_ref != 'main' }}
+        run: |
+          echo ${{ env.my_ref }}
+          exit 1
+
+      # List folder recursive (only for debugging)
+      - name: List folders
+        run: |
+          pwd
+          ls -R
+
+  # Test-local-lfs-with-path
+  Test-local-lfs-with-path:
+    # The type of runner that the job will run on: ubuntu
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+      fail-fast: false
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
+      # Checksout action repository under $GITHUB_WORKSPACE
+      - name: Checkout action repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref }}
+
+      # Run git lfs example repository checkout using local action
+      - name: Checkout a git-lfs repository
+        uses: ./
+        with:
+          repository: OpeningDesign/LFS-template
           path: git-lfs
           ref: main
           lfs: true
