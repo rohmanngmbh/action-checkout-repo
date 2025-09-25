@@ -114,14 +114,14 @@ jobs:
       - name: Checkout a git-lfs repository
         uses: ./
         with:
-          repository: Apress/repo-with-large-file-storage
+          repository: OpeningDesign/LFS-template
           path: git-lfs
-          ref: master
+          ref: main
           lfs: true
 
       # Test
       - name: Test
-        if:  ${{ env.my_ref != 'master' }}
+        if:  ${{ env.my_ref != 'main' }}
         run: |
           echo ${{ env.my_ref }}
           exit 1
