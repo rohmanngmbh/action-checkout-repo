@@ -70,6 +70,14 @@ inputs:
       Explicitly exclude files for LFS
     required: false
     default: ''
+  enableCrossOsArchive:
+    description: >
+      Whether the cache is cross-os compatible. This is useful to cache dependencies which
+      are independent of the runner platform. This will help reduce the consumption of the
+      cache quota and help build for multiple platforms from the same cache.
+      [Learn more about cross-os caching](https://github.com/actions/cache/blob/main/tips-and-workarounds.md#cross-os-cache).
+    required: false
+    default: false
 
 runs:
   using: "composite"
@@ -205,7 +213,25 @@ runs:
     - name: Create LFS file list
       if: ${{ inputs.lfs == 'true' &&  inputs.path == '' }}
       run: |
-        git lfs ls-files --long --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}" | cut -d ' ' -f1 | sort > .lfs-assets-id
+        git lfs ls-files --long --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}" | cut -d ' ' -f1 > .lfs-assets-id-unsorted
+        git submodule foreach git lfs ls-files --long --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}" | cut -d ' ' -f1 >> .lfs-assets-id-unsorted
+        cat .lfs-assets-id-unsorted | sort > .lfs-assets-id
+      shell: bash
+
+    - name: Create Submodule LFS Cache Paths
+      if: ${{ inputs.lfs == 'true' &&  inputs.path == '' }}
+      run: |
+        CACHE_PATHS=""
+
+        # loop over the git submodule paths to generate a list of module directories to cache
+        # `git config` is used to extract the `path` value for each git submodule
+        # for more information about the .gitmodules file, see: https://git-scm.com/docs/gitmodules
+        while read line; do
+          CACHE_PATHS+=".git/modules/$line/lfs "
+        done < <(git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
+
+        echo "CACHE_PATHS=$CACHE_PATHS" >> $GITHUB_OUTPUT
+      id: cache-paths
       shell: bash
 
     - name: Restore LFS cache
@@ -213,12 +239,25 @@ runs:
       uses: actions/cache@v4
       id: lfs-cache-base
       with:
-        path: .git/lfs
-        key: lfs-${{ hashFiles('.lfs-assets-id') }}-v1
+        path: |
+          .git/lfs
+          ${{ steps.cache-paths.outputs.CACHE_PATHS }}
+        key: lfs-${{ hashFiles('.lfs-assets-id') }}-v2
+        enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
 
     - name: Git LFS Pull
       if: ${{ inputs.lfs == 'true' &&  inputs.path == '' }}
-      run: git lfs pull --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}"
+      run: |
+        git lfs pull --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}"
+        git submodule foreach git lfs pull --include  "${{ inputs.include }}" --exclude  "${{ inputs.exclude }}"
+      shell: bash
+
+    # Don't leave behind temp files in case build system checks for dirty workspace
+    - name: Cleanup Temp Files
+      if: ${{ inputs.lfs == 'true' &&  inputs.path == '' }}
+      run: |
+        rm .lfs-assets-id-unsorted
+        rm .lfs-assets-id
       shell: bash
 
     # in case of special path
