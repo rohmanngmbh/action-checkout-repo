@@ -22,6 +22,10 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
+    permissions:
+      contents: read
+      pull-requests: write
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
@@ -60,6 +64,10 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
+
+    permissions:
+      contents: read
+      pull-requests: write
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -101,6 +109,10 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
+    permissions:
+      contents: read
+      pull-requests: write
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
@@ -141,6 +153,10 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
+    permissions:
+      contents: read
+      pull-requests: write
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
@@ -178,6 +194,10 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
+
+    permissions:
+      contents: read
+      pull-requests: write
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -218,6 +238,10 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
+    permissions:
+      contents: read
+      pull-requests: write
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
@@ -256,6 +280,10 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
+
+    permissions:
+      contents: read
+      pull-requests: write
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -296,6 +324,10 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
 
+    permissions:
+      contents: read
+      pull-requests: write
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
@@ -327,6 +359,10 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
       fail-fast: false
+
+    permissions:
+      contents: read
+      pull-requests: write
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
