@@ -92,7 +92,7 @@ runs:
     # Call normal checkout action: see https://github.com/actions/checkout
     # use default branch (or the reference)
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository:  ${{ inputs.repository }}
         token: ${{ inputs.token }}
@@ -105,7 +105,7 @@ runs:
     # this is neccessary for own ci test
     - name: Checkout own action code
       if: ${{ github.repository == 'rohmanngmbh/action-checkout-repo' }}
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: rohmanngmbh/action-checkout-repo
         ref: ${{ github.ref }}
@@ -114,7 +114,7 @@ runs:
     # Call normal checkout action: see https://github.com/actions/checkout
     - name: Checkout own action code
       if: ${{ github.repository != 'rohmanngmbh/action-checkout-repo' }}
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: rohmanngmbh/action-checkout-repo
         ref: develop       # <<<<< release tag or main
